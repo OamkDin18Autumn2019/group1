@@ -1,13 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+
+// Import main page
+import Main from './components/Main'
 
 function App() {
-  return (
-    <div className="App">
-      <h1>The Trains' App</h1>
-    </div>
-  );
+    return (
+        <Router>
+            <Main />
+        </Router>
+    );
 }
 
 export default App;
