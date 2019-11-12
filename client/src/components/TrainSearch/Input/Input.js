@@ -6,7 +6,7 @@ function Input(props) {
             type="text" 
             placeholder="Search for..." 
             value={props.query} 
-            onChange={props.handleInputChange} 
+            onChange={props.onChange} 
         />
     )
 }
