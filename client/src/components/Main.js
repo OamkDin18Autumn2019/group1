@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+// import train search component
 import TrainSearch from './TrainSearch/TrainSearch'
 
 class Main extends Component {
@@ -16,7 +17,7 @@ class Main extends Component {
         fetch('https://rata.digitraffic.fi/api/v1/trains')
             .then(res => res.json())
             .then(data => {
-                this.setState({ data: data, isLoading:false })
+                this.setState({ data: data, isLoading: false })
             })
     }
 

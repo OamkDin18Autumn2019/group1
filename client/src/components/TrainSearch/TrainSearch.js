@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 
 // import components
 import Dropdown from './Dropdown/Dropdown'
-import Input from './Input/Input'
+import Button from './Button/Button'
 
 class TrainSearch extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            input: "",
             select: "destination",
             data: this.props.data
         }
@@ -20,8 +19,8 @@ class TrainSearch extends Component {
     }
 
     // input change handler
-    handleInputChange = (e) => {
-        this.setState({ input: e.target.value })
+    handleOnCLick = () => {
+        console.log('honk!')
     }
 
     render() {
@@ -32,9 +31,8 @@ class TrainSearch extends Component {
                     value={this.state.select} 
                     onChange={this.handleSelectChange} 
                 />
-                <Input 
-                    value={this.state.input} 
-                    onChange={this.handleInputChange} 
+                <Button 
+                    onClick={this.handleOnCLick} 
                 />
             </div>
         )
