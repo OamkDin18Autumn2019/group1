@@ -10,6 +10,7 @@ class TrainSearch extends Component {
         this.state = {
             input: "",
             select: "destination",
+            data: this.props.data
         }
     }
 
@@ -26,8 +27,15 @@ class TrainSearch extends Component {
     render() {
         return (
             <div>
-                <Dropdown value={this.state.select} onChange={this.handleSelectChange} />
-                <Input value={this.state.input} onChange={this.handleInputChange} />
+                <Dropdown 
+                    data={this.state.data} 
+                    value={this.state.select} 
+                    onChange={this.handleSelectChange} 
+                />
+                <Input 
+                    value={this.state.input} 
+                    onChange={this.handleInputChange} 
+                />
             </div>
         )
     }

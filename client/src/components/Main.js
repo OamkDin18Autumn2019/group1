@@ -13,11 +13,10 @@ class Main extends Component {
 
     // fetch all live trains
     componentDidMount() {
-        fetch('https://rata.digitraffic.fi/api/v1/live-trains')
+        fetch('https://rata.digitraffic.fi/api/v1/trains')
             .then(res => res.json())
             .then(data => {
                 this.setState({ data: data, isLoading:false })
-                console.log(this.state.data)
             })
     }
 
@@ -28,7 +27,7 @@ class Main extends Component {
 
         return (
             <div>
-                <TrainSearch />
+                <TrainSearch data={this.state.data} />
             </div>
         )
     }
