@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-// import train search component
-import TrainSearch from './TrainSearch/TrainSearch'
+// import approuter
+import AppRouter from './AppRouter/AppRouter'
 
 class Main extends Component {
     constructor() {
@@ -28,7 +28,7 @@ class Main extends Component {
 
         return (
             <div>
-                <TrainSearch data={this.state.data} />
+                <AppRouter data={this.state.data} />
             </div>
         )
     }
