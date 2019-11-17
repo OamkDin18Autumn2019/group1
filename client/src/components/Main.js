@@ -28,6 +28,7 @@ class Main extends Component {
 
         return (
             <div>
+                <h1>Train Tracker</h1>
                 <AppRouter data={this.state.data} />
             </div>
         )
