@@ -12,7 +12,7 @@ const DetailsRow = (props) => (
 function DetailsTable(props) {
     const detailRows = props.details.map(row => <DetailsRow detail={row} />);
     return(
-        <table>
+        <table className='table-style'>
             <thead>
                 <th>Station ID</th>
                 <th>Arrival Time</th>
