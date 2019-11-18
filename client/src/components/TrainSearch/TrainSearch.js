@@ -28,6 +28,7 @@ class TrainSearch extends Component {
     render() {
         return (
             <div>
+                <h2>Select a Train</h2>
                 <Dropdown 
                     data={this.state.data} 
                     value={this.state.select} 
