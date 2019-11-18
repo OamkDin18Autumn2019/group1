@@ -1,32 +1,9 @@
 import React, {Component} from 'react';
 
-// displaying rows with stateless const class
-const DetailsRow = (props) => (
-    <tr>
-        <td> {props.detail.stationId} </td>
-        <td> {props.detail.arrivalTime} </td>
-        <td> {props.detail.departureTime} </td>
-        <td> {props.detail.trackNum} </td>
-    </tr>
-);
+// import details table
+import DetailsTable from './DetailsTable/DetailsTable'
 
-//
-function DetailsTable(props) {
-    const detailRows = props.details.map(row => <DetailsRow detail={row} />);
-    return(
-        <table className='table-style'>
-            <thead>
-                <th>Station ID</th>
-                <th>Arrival Time</th>
-                <th>Departure Time</th>
-                <th>Track Number</th>
-            </thead>
-            <tbody> {detailRows} </tbody>
-        </table>
-    );
-}
-
-class DetailsView extends Component{
+class TrainDetails extends Component{
 
     constructor(){
         super();
@@ -77,4 +54,4 @@ class DetailsView extends Component{
     }
 }
 
-export default DetailsView
+export default TrainDetails
