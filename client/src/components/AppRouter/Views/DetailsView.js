@@ -34,36 +34,40 @@ class DetailsView extends Component{
             details: [],
          };        
     }
-    
-    componentDidMount(){
-        //console.log(this.state.trainNum);
-        this.loadData(22);
-    }
 
     loadData(val){
         let details = [];
         let detailsObj = undefined;
         let stations = [];
         let trainNum = val;
-        if (Number.isInteger(trainNum)){
-            console.log(trainNum);
-            fetch(`https://rata.digitraffic.fi/api/v1/trains/latest/${trainNum}`)
-            .then(response => response.json())
-            .then(data => {
-                    stations = data[0].timeTableRows;
+        fetch(`https://rata.digitraffic.fi/api/v1/trains/latest/${trainNum}`)
+        .then(response => response.json())
+        .then(data => {
+                stations = data[0].timeTableRows;
+                for (var i=0; i<stations.length; i++) {
                     detailsObj = {
-                        stationId: stations[0].stationShortCode,
-                        arrivalTime: stations[0].type,
-                        departureTime: stations[0].scheduledTime,
-                        trackNum: stations[0].commercialTrack,
+                        stationId: stations[i].stationShortCode,
+                        arrivalTime: stations[i].type,
+                        departureTime: stations[i].scheduledTime,
+                        trackNum: stations[i].commercialTrack,
                     };
                     details.push(detailsObj);
-                    this.setState({ details: details });
-                }    
-            );
-        }
+                }
+                this.setState({ details: details });
+            }    
+        );
+    }
+    
+    componentDidMount(){
+        console.log(this.props.trainNum);
+    }
 
-    }   
+    componentDidUpdate(prevProps){
+        if(this.props.trainNum !== prevProps.trainNum){
+            this.loadData(this.props.trainNum);
+        }
+    }
+
     render(){
         return(
             <div>

@@ -10,7 +10,8 @@ class TrainSearch extends Component {
         super(props)
         this.state = {
             select: "destination",
-            data: this.props.data
+            data: this.props.data,
+            buttonVal: undefined,
         }
     }
 
@@ -22,7 +23,7 @@ class TrainSearch extends Component {
 
     // input change handler
     handleOnCLick = () => {
-        console.log('honk!')
+        this.setState({ buttonVal: this.state.select });
     }
 
     render() {
@@ -37,7 +38,7 @@ class TrainSearch extends Component {
                     onClick={this.handleOnCLick} 
                 />
                 <h2>Train Details</h2>
-                <DetailsView trainNum={this.state.select} />
+                <DetailsView trainNum={this.state.buttonVal} />
             </div>
         )
     }
