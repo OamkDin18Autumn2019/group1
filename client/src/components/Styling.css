@@ -6,7 +6,7 @@ body{
     color: #fff;
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    animation: gradientBG 10s ease infinite;
 }
 @keyframes gradientBG {
     0% {
@@ -34,4 +34,19 @@ body{
     font-size: 30px;
     position: relative;
     margin:0;
+}
+.mainFunctionButton{
+    padding: 10px 30px;
+    background: none;
+    background-color: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    margin: 3px 0px;
+}
+.mainFunctionButton:hover {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 1000px;
+    animation: gradientBG 3s ease infinite;
+    color: white;
 }

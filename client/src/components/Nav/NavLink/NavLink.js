@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function NavLink(props) {
     return (
-        <Link to={props.route} ><button>{props.button}</button></Link>
+        <Link to={props.route} ><button className="mainFunctionButton">{props.button}</button></Link>
     )
 }
 
