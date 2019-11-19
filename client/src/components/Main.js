@@ -3,7 +3,7 @@ import './Styling.css'
 
 // import approuter
 import AppRouter from './AppRouter/AppRouter'
-
+import Nav from './Nav/Nav'
 
 class Main extends Component {
     constructor() {
@@ -27,8 +27,10 @@ class Main extends Component {
         if (this.state.isLoading) {
             return "Loading..."
         }
+
         return (
             <div>
+                <Nav />
                 <h1 className='title'>Train Tracker</h1>
                 <AppRouter data={this.state.data} />
             </div>
