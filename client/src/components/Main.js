@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './Styling.css'
 
 // import approuter
 import AppRouter from './AppRouter/AppRouter'
@@ -28,7 +29,7 @@ class Main extends Component {
         }
         return (
             <div>
-                <h1>Train Tracker</h1>
+                <h1 className='title'>Train Tracker</h1>
                 <AppRouter data={this.state.data} />
             </div>
             
