@@ -13,29 +13,39 @@ class RegisterView extends Component {
   render() {
         return (
             <div>
-                <h2> User register</h2>
-      <div>Please enter your full name, username and password</div>
-      <br/>
-      <form onSubmit={ register }>
-        <div className="tableCellNoBorder">
-          <div className="tableRow">
-            <div className="tableCellNoBorder"> Full name: </div>
-            <div className="tableCellNoBorder"> <input type="text" name="full_name" /> </div>
-          </div>
-          <div className="tableRow">
-            <div className="tableCellNoBorder"> Username: </div>
-            <div className="tableCellNoBorder"> <input type="text" name="username" /> </div>
-          </div>
-          <div className="tableRow">
-            <div className="tableCellNoBorder"> Password: </div>
-            <div className="tableCellNoBorder"> <input type="password" name="password" /> </div>
-          </div>
-          <div className="tableRow">
-            <div className="tableCellNoBorder"> <br/>  <button type="submit">Register</button> </div>
-            <div className="tableCellNoBorder"> <br/>  <Link to="/"><button>Cancel</button></Link> </div>
-          </div>
-        </div>
-      </form>
+                <h2 className="titleRegister"> User register</h2><br/>
+                <div style={{textAlign: "center"}}>Please enter your full name, username and password</div>
+            <br/>
+                <form onSubmit={ register }>
+                <div className="tableCellNoBorder">
+
+                    <div className="tableRow">            
+                        <input type="text" name="full_name" required/>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Full name...</label>
+                     </div>
+
+                    <div className="tableRow">            
+                        <input type="text" name="username" required/>
+                       <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Username...</label>
+                    </div>
+
+                    <div className="tableRow">            
+                        <input type="password" name="password" required/>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Password...</label>
+                    </div>
+
+            <div className="tableRow">
+                <div className="tableCellNoBorder"> <br/>  <button type="submit">Register</button> </div>
+                <div className="tableCellNoBorder"> <br/>  <Link to="/"><button>Cancel</button></Link> </div>
+            </div>
+            </div>
+        </form>
                 
             </div>
         )

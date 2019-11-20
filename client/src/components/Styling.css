@@ -1,3 +1,4 @@
+/*Style all pages backgound*/
 body{
     margin: 0;
     width: 100%;
@@ -20,6 +21,7 @@ body{
     }
 }
 
+/*Style big titles and pages'titles*/
 .title {
     color: floralwhite;
     text-align: center;
@@ -27,7 +29,7 @@ body{
     font-size: 45px;
     text-shadow: #EDEDED 2px 1px 0;
 }
-.titleSelection{
+.titleSelection {
     font-style: italic;;
     color:floralwhite;
     text-align: center;
@@ -35,14 +37,25 @@ body{
     position: relative;
     margin:0;
 }
+.titleRegister {
+    font-style: italic;;
+    color:floralwhite;
+    text-align: center;
+    font-size: 30px;
+    position: relative;
+    margin:0;
+}
+
+/*Style buttons*/
 .mainFunctionButton{
     padding: 10px 30px;
     background: none;
     background-color: none;
-    border: none;
+    border: solid;
+    border-color: white ;
     color: white;
     font-weight: bold;
-    margin: 3px 0px;
+    margin: 3px 5px;
 }
 .mainFunctionButton:hover {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -50,3 +63,108 @@ body{
     animation: gradientBG 3s ease infinite;
     color: white;
 }
+
+/*Style forms*/
+/*Register form*/
+.tableRow { 
+    position:relative; 
+    margin-bottom:45px; 
+    text-align: center;
+  }
+  input {
+    font-size:15px;
+    color: white;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:300px;
+    border: none;
+    border-bottom:1px solid #757575;
+    background: none;
+    margin: 0 auto;
+  }
+  input:focus { 
+    outline:none; }
+  
+  /* LABEL ======================================= */
+  label {
+    color: lightgray ; 
+    font-size:18px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:490px;
+    top:12px;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  
+  /* active state */
+  input:focus ~ label, input:valid ~ label {
+    top:-20px;
+    font-size:14px;
+    color:rgb(70, 90, 172);
+  }
+  
+  /* BOTTOM BARS ================================= */
+  .bar { 
+    position:relative; 
+    display:block; 
+    width:315px; 
+    margin: 0 auto;
+}
+  .bar:before, .bar:after 	{
+    content:'';
+    height:2px; 
+    width:0;
+    bottom:1px; 
+    position:absolute;
+    background:#5264AE; 
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  .bar:before {
+    left:50%;
+  }
+  .bar:after {
+    right:50%; 
+  }
+  
+  /* active state */
+  input:focus ~ .bar:before, input:focus ~ .bar:after {
+    width:50%;
+  }
+  
+  /* HIGHLIGHTER ================================== */
+  .highlight {
+    position:absolute;
+    height:60%; 
+    width:100px; 
+    top:25%; 
+    left:0;
+    pointer-events:none;
+    opacity:0.5;
+    margin: 0 auto;
+  }
+  
+  /* active state */
+  input:focus ~ .highlight {
+    -webkit-animation:inputHighlighter 0.3s ease;
+    -moz-animation:inputHighlighter 0.3s ease;
+    animation:inputHighlighter 0.3s ease;
+  }
+  
+  /* ANIMATIONS ================ */
+  @-webkit-keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @-moz-keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
