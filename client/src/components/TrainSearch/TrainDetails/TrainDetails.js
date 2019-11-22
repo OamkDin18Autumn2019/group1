@@ -21,15 +21,45 @@ class TrainDetails extends Component{
         .then(response => response.json())
         .then(data => {
                 stations = data[0].timeTableRows;
+                let arrivalArr = [];
+                let departureArr = [];
+                let departureFirst = undefined;
+                let arrivalLast = undefined;
+                for (var i=0; i<stations.length; i++){
+                    if (stations[i].type === 'DEPARTURE') {
+                        departureArr.push(stations[i]);
+                    }
+                }
+                departureFirst = departureArr.shift();
                 for (var i=0; i<stations.length; i++) {
-                    detailsObj = {
-                        stationId: stations[i].stationShortCode,
-                        arrivalTime: stations[i].type,
-                        departureTime: stations[i].scheduledTime,
-                        trackNum: stations[i].commercialTrack,
-                    };
+                    if (stations[i].type === 'ARRIVAL') {
+                        arrivalArr.push(stations[i]);
+                    }
+                }
+                arrivalLast = arrivalArr.pop();
+                details.push({
+                    stationId: departureFirst.stationShortCode,
+                    arrivalTime: "---",
+                    departureTime:departureFirst.scheduledTime,
+                    trackNum: departureFirst.commericialTrack,
+                });
+                for (var i=0; i<arrivalArr.length; i++) {
+                    if(arrivalArr[i].stationShortCode === departureArr[i].stationShortCode){
+                        detailsObj = {
+                            stationId: arrivalArr[i].stationShortCode,
+                            arrivalTime: arrivalArr[i].scheduledTime,
+                            departureTime: departureArr[i].scheduledTime,
+                            trackNum: arrivalArr[i].commercialTrack,
+                        };
+                    }
                     details.push(detailsObj);
                 }
+                details.push({
+                    stationId: arrivalLast.stationShortCode,
+                    arrivalTime: arrivalLast.scheduledTime,
+                    departureTime:"---",
+                    trackNum: arrivalLast.commericialTrack,
+                });
                 this.setState({ details: details });
             }    
         );
