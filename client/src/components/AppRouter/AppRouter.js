@@ -11,6 +11,7 @@ class AppRouter extends Component {
         super(props)
         this.state = {
             data: this.props.data,
+            locationData: this.props.locationData,
             userFullName: null
         }
     }
@@ -18,7 +19,7 @@ class AppRouter extends Component {
     render() {
         return (
             <div>
-                <Route exact path='/' render={props => <MainView {...props} data={this.state.data} />} />
+                <Route exact path='/' render={props => <MainView {...props} data={this.state.data} locationData={this.state.locationData} />} />
                 <Route path='/login' component={ LoginView } />
                 <Route path='/register' component={ RegisterView } />
             </div>
