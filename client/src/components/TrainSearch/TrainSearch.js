@@ -4,14 +4,17 @@ import React, { Component } from 'react'
 import Dropdown from './Dropdown/Dropdown'
 import Button from './Button/Button'
 import TrainDetails from './TrainDetails/TrainDetails'
+import MapContainer from './Map/Map'
 
 class TrainSearch extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            select: undefined,
+            select: this.props.data[0].trainNumber,
             data: this.props.data,
+            locationData: this.props.locationData,
             buttonVal: undefined,
+            showMap: false
         }
     }
 
@@ -20,12 +23,29 @@ class TrainSearch extends Component {
         this.setState({ select: e.target.value })
     }
 
-    // input change handler
-    handleOnCLick = () => {
-        this.setState({ buttonVal: this.state.select });
+    // input search change handler
+    handleSearchClick = () => {
+        this.setState({ buttonVal: this.state.select, searchClicked: false });
+    }
+
+    // display map
+    handleShowMapClick = () => {
+        this.setState({ showMap: true })
+    }
+
+    //  stop displaying map
+    handleMinimizeMapClick = () => {
+        this.setState({ showMap: false })
     }
 
     render() {
+        if (this.state.showMap) {
+            return <MapContainer 
+                data={this.state.data}
+
+            />
+        }
+
         return (
             <div>
                 <h2>Select a Train</h2>
@@ -35,7 +55,12 @@ class TrainSearch extends Component {
                     onChange={this.handleSelectChange} 
                 />
                 <Button 
-                    onClick={this.handleOnCLick} 
+                    onClick={this.handleSearchClick} 
+                    buttonText="Display train details"
+                />
+                <Button
+                    onClick={this.handleShowMapClick}
+                    buttonText="Display selected train on a map"
                 />
                 <h2>Train Details</h2>
                 <TrainDetails 
