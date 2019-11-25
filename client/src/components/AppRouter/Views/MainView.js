@@ -8,7 +8,6 @@ class MainView extends Component {
         super(props)
         this.state = {
             data: this.props.data,
-            locationData: this.props.locationData
         }
     }
 
@@ -17,7 +16,6 @@ class MainView extends Component {
             <div>
                 <TrainSearch 
                     data={this.state.data} 
-                    locationData={this.state.locationData} 
                 />
             </div>
         )
