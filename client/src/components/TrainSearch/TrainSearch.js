@@ -12,7 +12,6 @@ class TrainSearch extends Component {
         this.state = {
             select: this.props.data[0].trainNumber,
             data: this.props.data,
-            locationData: this.props.locationData,
             buttonVal: undefined,
             showMap: false
         }
@@ -25,7 +24,7 @@ class TrainSearch extends Component {
 
     // input search change handler
     handleSearchClick = () => {
-        this.setState({ buttonVal: this.state.select, searchClicked: false });
+        this.setState({ buttonVal: this.state.select });
     }
 
     // display map
@@ -40,10 +39,18 @@ class TrainSearch extends Component {
 
     render() {
         if (this.state.showMap) {
-            return <MapContainer 
-                data={this.state.data}
-
-            />
+            return (
+                <div>
+                    <Button 
+                        onClick={this.handleMinimizeMapClick}
+                        buttonText="Close map"                 
+                    />     
+                    <MapContainer 
+                        trainNumber={this.state.select}
+                        locationData={this.state.locationData}
+                    />
+                </div>
+            )
         }
 
         return (
@@ -60,7 +67,7 @@ class TrainSearch extends Component {
                 />
                 <Button
                     onClick={this.handleShowMapClick}
-                    buttonText="Display selected train on a map"
+                    buttonText="Display train on map"
                 />
                 <h2>Train Details</h2>
                 <TrainDetails 
