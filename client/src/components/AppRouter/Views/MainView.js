@@ -7,14 +7,16 @@ class MainView extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: this.props.data
+            data: this.props.data,
         }
     }
 
     render() {
         return (
             <div>
-                <TrainSearch data={this.state.data} />
+                <TrainSearch 
+                    data={this.state.data} 
+                />
             </div>
         )
     }

@@ -15,6 +15,7 @@ class Main extends Component {
 
     // fetch all live trains
     componentDidMount() {
+        // fetch trains and stations
         fetch('https://rata.digitraffic.fi/api/v1/trains')
             .then(res => res.json())
             .then(data => {
@@ -31,7 +32,9 @@ class Main extends Component {
             <div>
                 <Nav />
                 <h1>Train Tracker</h1>
-                <AppRouter data={this.state.data} />
+                <AppRouter 
+                    data={this.state.data} 
+                />
             </div>
             
         )
