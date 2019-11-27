@@ -1,38 +1,29 @@
 const express = require("express");
-const async = require("express-async-await");
-const fetch = require("node-fetch");
 const MongoClient = require("mongodb").MongoClient;
 const bodyParser = require("body-parser");
+const cors = require('cors');
 
 const app = express();
-app.use(express.static("static"));
+app.use(cors());
 app.use(bodyParser.json());
-let trainNumber = undefined;
 
-app.post("/api/train-num", (req, res) => {
-    const trainNum = req.body;
-    db.collection("user_values").insertOne(trainNum);
-    res.send("the value has been added");
-    db.collection("user_values").findOne().then(result => {
-        trainNumber = result.trainNum;
-        console.log(trainNumber); 
+app.get('/api/all_stations', (req, res) => {
+    db.collection('stations').find().toArray()
+    .then(categories => {
+        const total_count = {count: categories.length};
+        res.json({_total_count: total_count, categories: categories });
+    }).catch(error => {
+        console.log(error);
     });
 });
 
-app.get("/api/train-info", async function (req, res, next){
-    function fetchData(){
-        return fetch(`https://rata.digitraffic.fi/api/v1/trains/latest/${trainNumber}`);
-    }
-    const processData = async () => {
-        const fetchedData = await fetchData();
-        const trainJson = await fetchedData.json();
-        const trainCategory = trainJson[0].trainCategory;
-        const scheduledTime = trainJson[0].timeTableRows[0].scheduledTime;
-        const actualTime = trainJson[0].timeTableRows[0].actualTime;
-        const trackNumber = trainJson[0].timeTableRows[0].commercialTrack;
-        res.send({"trainCategory": trainCategory, "scheduledTime": scheduledTime, "actualTime": actualTime, "trackNumber": trackNumber});
-    }
-    processData();
+app.post('/api/resolve_station', (req, res) => {
+    const stationReq = req.body;
+    db.collection('stations').find({cate_name: stationReq.letter}).toArray()
+    .then(arr => {
+        let letter = arr[0].cate_name;
+        res.json(arr[0][letter]);
+    });
 });
 
 let db;

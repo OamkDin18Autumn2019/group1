@@ -35,6 +35,7 @@ for (var i=0; i<stationFirstLetters.length; i++){
 
 for (var i=0; i<stationFirstLettersUnique.length; i++){
     let outterObj = new Object();
+    outterObj.cate_name = stationFirstLettersUnique[i];
     outterObj[stationFirstLettersUnique[i]] = [];
     for (var j=0; j<stationFirstLetters.length; j++){
         if (stationFirstLetters[j] === stationFirstLettersUnique[i]) {
