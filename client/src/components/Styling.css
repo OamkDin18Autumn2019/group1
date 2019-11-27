@@ -45,6 +45,14 @@ body{
     position: relative;
     margin:0;
 }
+.titleLogin {
+    font-style: italic;;
+    color:floralwhite;
+    text-align: center;
+    font-size: 30px;
+    position: relative;
+    margin:0;
+}
 
 /*Style buttons*/
 .mainFunctionButton{
@@ -65,7 +73,7 @@ body{
 }
 
 /*Style forms*/
-/*Register form*/
+/*Register and Login forms*/
 .tableRow { 
     position:relative; 
     margin-bottom:45px; 
