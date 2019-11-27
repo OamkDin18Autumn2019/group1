@@ -37,6 +37,14 @@ body{
     position: relative;
     margin:0;
 }
+.titleDetails {
+    font-style: italic;;
+    color:floralwhite;
+    text-align: center;
+    font-size: 30px;
+    position: relative;
+    margin:0;
+}
 .titleRegister {
     font-style: italic;;
     color:floralwhite;

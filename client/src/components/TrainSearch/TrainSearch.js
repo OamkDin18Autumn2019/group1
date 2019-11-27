@@ -28,7 +28,7 @@ class TrainSearch extends Component {
     render() {
         return (
             <div>
-                <h2 className='titleSelection'>Select a Train</h2>
+                <h2 className='titleSelection'>Select a Train</h2><br/>
                 <Dropdown 
                     data={this.state.data} 
                     value={this.state.select} 
@@ -36,8 +36,8 @@ class TrainSearch extends Component {
                 />
                 <Button 
                     onClick={this.handleOnCLick} 
-                />
-                <h2>Train Details</h2>
+                /><br/>
+                <h2 className='titleDetails'>Train Details</h2>
                 <TrainDetails 
                     trainNum={this.state.buttonVal} 
                 />
