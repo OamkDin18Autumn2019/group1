@@ -5,7 +5,7 @@ import DetailsRow from '../DetailsRow/DetailsRow'
 
 //
 function DetailsTable(props) {
-    const detailRows = props.details.map(row => <DetailsRow detail={row} />);
+    const detailRows = props.stationDetails.map(row => <DetailsRow detail={row} />);
     
     return(
         <table className='table-style'>
