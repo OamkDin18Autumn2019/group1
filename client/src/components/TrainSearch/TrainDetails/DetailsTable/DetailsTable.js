@@ -10,7 +10,7 @@ function DetailsTable(props) {
     return(
         <table className='table-style'>
             <thead>
-                <th>Station ID</th>
+                <th>Station Name</th>
                 <th>Arrival Time</th>
                 <th>Departure Time</th>
                 <th>Track Number</th>

@@ -27,15 +27,6 @@ app.get('/api/stations_raw_data', (req, res) => {
     });
 });
 
-app.post('/api/resolve_station', (req, res) => {
-    const stationReq = req.body;
-    db.collection('stations').find({cate_name: stationReq.letter}).toArray()
-    .then(arr => {
-        let letter = arr[0].cate_name;
-        res.json(arr[0][letter]);
-    });
-});
-
 let db;
 MongoClient.connect("mongodb://localhost/TrainsApp").then(connection => {
     db = connection.db("TrainsApp");
