@@ -11,12 +11,71 @@ class TrainDetails extends Component{
             details: [],
             stationCodes: [],
             stationNames: [],
+            stationNamesArr: [],
+            missingStations: [],
          };        
     }
     
-
     
     setFinalDetails(){
+
+        let stationNamesArr = this.state.stationNamesArr;
+        
+        let missingStationIndices = [];
+        for (var i=0; i<stationNamesArr.length; i++) {
+            if(stationNamesArr[i] === "couldn't resolve the station"){
+                missingStationIndices.push(i);
+            }
+        }
+
+        for(var i=0; i<this.state.missingStations.length; i++){
+            stationNamesArr[missingStationIndices[i]] = this.state.missingStations[i];
+        }
+
+        console.log(this.state.missingStations);
+        console.log(missingStationIndices);
+
+        
+        let stationDetailsArr = [];
+        if (this.state.details.length === stationNamesArr.length) {
+            for (var i=0; i<this.state.details.length; i++) {
+                
+                let stationDetailsObj = new Object();
+                
+                stationDetailsObj.stationName = stationNamesArr[i];
+                stationDetailsObj.arrivalTime = this.state.details[i].arrivalTime;
+                stationDetailsObj.departureTime = this.state.details[i].departureTime;
+                stationDetailsObj.trackNum = this.state.details[i].trackNum;
+                
+                stationDetailsArr.push(stationDetailsObj);
+            }
+        }
+        
+        let stationDetailsArrNeg = [];
+        if (this.state.details.length !== stationNamesArr.length) {
+            for (var i=0; i<this.state.details.length; i++){
+                let stationDetailsObj = new Object();
+                
+                stationDetailsObj.stationName = this.state.details[i].stationId;
+                stationDetailsObj.arrivalTime = this.state.details[i].arrivalTime;
+                stationDetailsObj.departureTime = this.state.details[i].departureTime;
+                stationDetailsObj.trackNum = this.state.details[i].trackNum;
+                
+                stationDetailsArrNeg.push(stationDetailsObj);            
+            }
+        }
+        
+        if (stationDetailsArr.length !== 0) {
+            this.setState({ stationDetails: stationDetailsArr });
+        }
+
+        if (stationDetailsArrNeg.length !== 0) {
+            this.setState({ stationDetails: stationDetailsArrNeg });
+        }
+        
+    }
+    
+    arrangeStationNames(){
     
         let randomServerResArr = [];
         for (var i=0; i<this.state.stationNames.length; i++) {
@@ -57,44 +116,38 @@ class TrainDetails extends Component{
                 }
             }
         }
+        this.setState({ stationNamesArr: stationNamesArr });
 
-        
-
-        
-        let stationDetailsArr = [];
-        if (this.state.details.length === stationNamesArr.length) {
-            for (var i=0; i<this.state.details.length; i++) {
-                
-                let stationDetailsObj = new Object();
-                
-                stationDetailsObj.stationName = stationNamesArr[i];
-                stationDetailsObj.arrivalTime = this.state.details[i].arrivalTime;
-                stationDetailsObj.departureTime = this.state.details[i].departureTime;
-                stationDetailsObj.trackNum = this.state.details[i].trackNum;
-                
-                stationDetailsArr.push(stationDetailsObj);
+        let missingStationsIndices =[];
+        for (var i=0; i<stationNamesArr.length; i++) {
+            if (stationNamesArr[i] === "couldn't resolve the station") {
+                missingStationsIndices.push(i);
             }
-        } 
+        }
 
-        let stationDetailsArrNeg = [];
-        if (this.state.details.length !== stationNamesArr.length) {
-            let stationDetailsObj = new Object();
-                
-                stationDetailsObj.stationName = this.state.details[i].stationId;
-                stationDetailsObj.arrivalTime = this.state.details[i].arrivalTime;
-                stationDetailsObj.departureTime = this.state.details[i].departureTime;
-                stationDetailsObj.trackNum = this.state.details[i].trackNum;
-                
-                stationDetailsArrNeg.push(stationDetailsObj);            
+        let missingStations = [];
+        if (this.state.stationCodes.length === stationNamesArr.length) {
+            for (var i=0; i<stationNamesArr.length; i++) {   
+                if (stationNamesArr[i] === "couldn't resolve the station") {
+                    let code = this.state.stationCodes[i];
+                    fetch('http://localhost:4000/api/stations_raw_data')
+                    .then(response => response.json())
+                    .then(data => {
+                        for (var j=0; j<data.data.length; j++) {
+                            if (data.data[j].stationShortCode === code){
+                                missingStations.push(data.data[j].stationName);
+                            }
+                        }
+                        if (missingStationsIndices.length === missingStations.length){
+                            
+                            this.setState({ missingStations: missingStations });
+                            this.setFinalDetails();
+                        }    
+                    });
+                }
+            }
         }
         
-        if (stationDetailsArr.length !== 0) {
-            this.setState({ stationDetails: stationDetailsArr });
-        }
-
-        if (stationDetailsArrNeg.length !== 0) {
-            this.setState({ stationDetails: stationDetailsArrNeg });
-        }
     }
 
     resolveStation(){
@@ -114,7 +167,7 @@ class TrainDetails extends Component{
                 dataArr.push(data);
                if(dataArr.length === this.state.stationCodes.length){
                     this.setState({ stationNames: dataArr });
-                    this.setFinalDetails();
+                    this.arrangeStationNames();
                }   
             });
         }

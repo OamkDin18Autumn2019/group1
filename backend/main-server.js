@@ -17,6 +17,16 @@ app.get('/api/all_stations', (req, res) => {
     });
 });
 
+app.get('/api/stations_raw_data', (req, res) => {
+    db.collection('stationsRawData').find().toArray()
+    .then(data => {
+        const total_count = {count: data.length};
+        res.json({_total_count: total_count, data: data });
+    }).catch(error => {
+        console.log(error);
+    });
+});
+
 app.post('/api/resolve_station', (req, res) => {
     const stationReq = req.body;
     db.collection('stations').find({cate_name: stationReq.letter}).toArray()
