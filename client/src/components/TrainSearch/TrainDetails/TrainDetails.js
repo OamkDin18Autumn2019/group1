@@ -15,7 +15,6 @@ class TrainDetails extends Component{
     }
     
     setFinalDetails(){
-        
         let stationDetailsArr = [];
         for (var i=0; i<this.state.details.length; i++) {
             
