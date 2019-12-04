@@ -9,7 +9,8 @@ class Main extends Component {
         super()
         this.state = {
             data: [],
-            isLoading: true
+            isLoading: true,
+            userFullName: null
         }
     }
 
@@ -23,6 +24,11 @@ class Main extends Component {
             })
     }
 
+    // Sets user fullname
+    setUserFullName = (newValue) => {
+        this.setState({ userFullName: newValue });
+    }
+
     render() {
         if (this.state.isLoading) {
             return "Loading..."
@@ -30,10 +36,10 @@ class Main extends Component {
 
         return (
             <div>
-                <Nav />
+                <Nav userFullName={this.state.userFullName} setUserFullName={this.setUserFullName} />
                 <h1>Train Tracker</h1>
                 <AppRouter 
-                    data={this.state.data} 
+                    data={this.state.data} setUserFullName={this.setUserFullName}
                 />
             </div>
             
