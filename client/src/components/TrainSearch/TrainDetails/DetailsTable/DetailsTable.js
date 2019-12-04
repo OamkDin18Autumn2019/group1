@@ -8,7 +8,7 @@ function DetailsTable(props) {
     const detailRows = props.details.map(row => <DetailsRow detail={row} />);
     
     return(
-        <table className='table-style'>
+        <table className='table-style' align="center">
             <thead>
                 <th>Station ID</th>
                 <th>Arrival Time</th>

@@ -38,6 +38,7 @@ class TrainSearch extends Component {
                     onClick={this.handleOnCLick} 
                 /><br/>
                 <h2 className='titleDetails'>Train Details</h2>
+                <br/>
                 <TrainDetails 
                     trainNum={this.state.buttonVal} 
                 />

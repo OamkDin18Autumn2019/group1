@@ -41,8 +41,8 @@ class RegisterView extends Component {
                     </div>
 
             <div className="tableRow">
-                <div className="tableCellNoBorder"> <br/>  <button type="submit">Register</button> </div>
-                <div className="tableCellNoBorder"> <br/>  <Link to="/"><button>Cancel</button></Link> </div>
+                <div className="tableCellNoBorder"> <br/>  <button className="extraFunctionButton" type="submit"><span>Register</span></button> </div>
+                <div className="tableCellNoBorder"> <br/>  <Link to="/"><button className="extraFunctionButton"><span>Cancel</span></button></Link> </div>
             </div>
             </div>
         </form>

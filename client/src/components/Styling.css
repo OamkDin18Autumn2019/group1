@@ -1,24 +1,11 @@
 /*Style all pages backgound*/
-body{
+body {
     margin: 0;
     width: 100%;
-    height: 100vh;
+    height: 500vh;
     font-family: "Exo", sans-serif;
     color: #fff;
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
-}
-@keyframes gradientBG {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+    background: yellowgreen;
 }
 
 /*Style big titles and pages'titles*/
@@ -64,20 +51,80 @@ body{
 
 /*Style buttons*/
 .mainFunctionButton{
-    padding: 10px 30px;
-    background: none;
-    background-color: none;
-    border: solid;
-    border-color: white ;
-    color: white;
-    font-weight: bold;
-    margin: 3px 5px;
+    color: #20bf6b !important;
+    margin: 5px;
+    text-transform: uppercase;
+    background: #ffffff;
+    padding: 12px;
+    border: 4px solid #20bf6b !important;
+    border-radius: 6px;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
 }
 .mainFunctionButton:hover {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 1000px;
-    animation: gradientBG 3s ease infinite;
-    color: white;
+    color: red !important;
+    border-radius: 50px;
+    border-color: red !important;
+    transition: all 0.3s ease 0s;
+}
+
+.displayTableButton {
+    color: #fff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    transition: all 0.4s ease 0s;
+    background: linear-gradient(to right, #67b26b, #4ca2cb) !important;
+    text-align: center;
+    font-size: 15px;
+    width: 200px;
+    cursor: pointer;
+    margin: 5px;
+}
+.displayTableButton:hover {
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+}
+
+.extraFunctionButton {
+    border-radius: 10px;
+    background: linear-gradient(to right, #67b26b, #4ca2cb) !important;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 15px;
+    padding: 10px;
+    width: 150px;
+    transition: all 0.4s;
+    cursor: pointer;
+    margin: 5px;
+}
+.extraFunctionButton span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.4s;
+}
+.extraFunctionButton span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.extraFunctionButton:hover span {
+    padding-right: 25px;
+}
+.extraFunctionButton:hover span:after {
+    opacity: 1;
+    right: 0;
 }
 
 /*Style forms*/
