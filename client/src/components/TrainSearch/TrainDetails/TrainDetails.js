@@ -11,164 +11,44 @@ class TrainDetails extends Component{
             details: [],
             stationCodes: [],
             stationNames: [],
-            stationNamesArr: [],
-            missingStations: [],
          };        
     }
     
-    
     setFinalDetails(){
-
-        let stationNamesArr = this.state.stationNamesArr;
-        
-        let missingStationIndices = [];
-        for (var i=0; i<stationNamesArr.length; i++) {
-            if(stationNamesArr[i] === "couldn't resolve the station"){
-                missingStationIndices.push(i);
-            }
-        }
-
-        for(var i=0; i<this.state.missingStations.length; i++){
-            stationNamesArr[missingStationIndices[i]] = this.state.missingStations[i];
-        }
-
-        console.log(this.state.missingStations);
-        console.log(missingStationIndices);
-
-        
         let stationDetailsArr = [];
-        if (this.state.details.length === stationNamesArr.length) {
-            for (var i=0; i<this.state.details.length; i++) {
-                
-                let stationDetailsObj = new Object();
-                
-                stationDetailsObj.stationName = stationNamesArr[i];
-                stationDetailsObj.arrivalTime = this.state.details[i].arrivalTime;
-                stationDetailsObj.departureTime = this.state.details[i].departureTime;
-                stationDetailsObj.trackNum = this.state.details[i].trackNum;
-                
-                stationDetailsArr.push(stationDetailsObj);
-            }
-        }
-        
-        let stationDetailsArrNeg = [];
-        if (this.state.details.length !== stationNamesArr.length) {
-            for (var i=0; i<this.state.details.length; i++){
-                let stationDetailsObj = new Object();
-                
-                stationDetailsObj.stationName = this.state.details[i].stationId;
-                stationDetailsObj.arrivalTime = this.state.details[i].arrivalTime;
-                stationDetailsObj.departureTime = this.state.details[i].departureTime;
-                stationDetailsObj.trackNum = this.state.details[i].trackNum;
-                
-                stationDetailsArrNeg.push(stationDetailsObj);            
-            }
-        }
-        
-        if (stationDetailsArr.length !== 0) {
-            this.setState({ stationDetails: stationDetailsArr });
-        }
-
-        if (stationDetailsArrNeg.length !== 0) {
-            this.setState({ stationDetails: stationDetailsArrNeg });
-        }
-        
-    }
-    
-    arrangeStationNames(){
-    
-        let randomServerResArr = [];
-        for (var i=0; i<this.state.stationNames.length; i++) {
-            let serverResObj = new Object();
-            serverResObj.letter = this.state.stationNames[i][1].stationId.slice(0,1);
-            serverResObj.list = this.state.stationNames[i];
-            randomServerResArr.push(serverResObj);
-        }
-        
-        let arrangedServerResArr = []; 
-        for (var i=0; i<this.state.stationCodes.length; i++){
-            let arr = [];
-            for (var j=0; j<randomServerResArr.length; j++){
-                if(randomServerResArr[j].letter === this.state.stationCodes[i].slice(0,1)){
-                    arr.push(randomServerResArr[j]);
-                }
-            }
-            arrangedServerResArr.push(arr[0]);
-        }
-
-
-        
-        let stationNamesDict = [];
-        for (var i=0; i<this.state.stationCodes.length; i++) {
-            if (this.state.stationCodes[i].slice(0,1) === arrangedServerResArr[i].letter) {
-                stationNamesDict.push(arrangedServerResArr[i].list);
-            }
-        }
-
-        let stationNamesArr = [];
-        for (var i=0; i<stationNamesDict.length; i++) {
-            if(stationNamesArr.length !== i){
-                stationNamesArr.push("couldn't resolve the station");
-            }
-            for (var j=0; j<stationNamesDict[i].length; j++) {
-                if (stationNamesDict[i][j].stationId === this.state.stationCodes[i]) {
-                    stationNamesArr.push(stationNamesDict[i][j].stationName);
-                }
-            }
-        }
-        this.setState({ stationNamesArr: stationNamesArr });
-
-        let missingStationsIndices =[];
-        for (var i=0; i<stationNamesArr.length; i++) {
-            if (stationNamesArr[i] === "couldn't resolve the station") {
-                missingStationsIndices.push(i);
-            }
-        }
-
-        let missingStations = [];
-        if (this.state.stationCodes.length === stationNamesArr.length) {
-            for (var i=0; i<stationNamesArr.length; i++) {   
-                if (stationNamesArr[i] === "couldn't resolve the station") {
-                    let code = this.state.stationCodes[i];
-                    fetch('http://localhost:4000/api/stations_raw_data')
-                    .then(response => response.json())
-                    .then(data => {
-                        for (var j=0; j<data.data.length; j++) {
-                            if (data.data[j].stationShortCode === code){
-                                missingStations.push(data.data[j].stationName);
-                            }
-                        }
-                        if (missingStationsIndices.length === missingStations.length){
-                            
-                            this.setState({ missingStations: missingStations });
-                            this.setFinalDetails();
-                        }    
-                    });
-                }
-            }
-        }
-        
+        for (var i=0; i<this.state.details.length; i++) {
+            
+            let stationDetailsObj = new Object();
+            
+            stationDetailsObj.stationName = this.state.stationNames[i];
+            stationDetailsObj.arrivalTime = this.state.details[i].arrivalTime;
+            stationDetailsObj.departureTime = this.state.details[i].departureTime;
+            stationDetailsObj.trackNum = this.state.details[i].trackNum;
+            
+            stationDetailsArr.push(stationDetailsObj);
+        }  
+        this.setState({ stationDetails: stationDetailsArr });
     }
 
     resolveStation(){
-        let dataArr = [];
-        for (var i=0; i<this.state.stationCodes.length; i++) {
-            let name = 'E';
-            let firstLetter = this.state.stationCodes[i].slice(0,1);
-            let stationReq = new Object();
-            stationReq.letter = firstLetter;
-            fetch('http://localhost:4000/api/resolve_station', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body:JSON.stringify(stationReq),
-            })
+        let stationNames = [];
+
+        for (var i=0; i<this.state.stationCodes.length; i++) {   
+            let code = this.state.stationCodes[i];
+            fetch('http://localhost:4000/api/stations_raw_data')
             .then(response => response.json())
             .then(data => {
-                dataArr.push(data);
-               if(dataArr.length === this.state.stationCodes.length){
-                    this.setState({ stationNames: dataArr });
-                    this.arrangeStationNames();
-               }   
+                for (var j=0; j<data.data.length; j++) {
+                    if (data.data[j].stationShortCode === code){
+                        stationNames.push(data.data[j].stationName);
+                    }
+                }
+                if (this.state.stationCodes.length === stationNames.length){   
+                    console.log(stationNames);
+                    console.log(this.state.stationCodes);
+                    this.setState({ stationNames: stationNames });
+                    this.setFinalDetails();      
+                }    
             });
         }
     }
@@ -182,6 +62,7 @@ class TrainDetails extends Component{
         fetch(`https://rata.digitraffic.fi/api/v1/trains/latest/${trainNum}`)
         .then(response => response.json())
         .then(data => {
+                console.log('data received from sever for train number')
                 stations = data[0].timeTableRows;
                 let arrivalArr = [];
                 let departureArr = [];
