@@ -9,6 +9,7 @@ class TrainDetails extends Component{
         this.state = { 
             stationDetails: [],
             details: [],
+            timeDetails: [],
             stationCodes: [],
             stationNames: [],
          };        
@@ -21,13 +22,41 @@ class TrainDetails extends Component{
             let stationDetailsObj = new Object();
             
             stationDetailsObj.stationName = this.state.stationNames[i];
-            stationDetailsObj.arrivalTime = this.state.details[i].arrivalTime;
-            stationDetailsObj.departureTime = this.state.details[i].departureTime;
+            stationDetailsObj.arrivalTime = this.state.timeDetails[i].arrivalTime;
+            stationDetailsObj.departureTime = this.state.timeDetails[i].departureTime;
             stationDetailsObj.trackNum = this.state.details[i].trackNum;
             
             stationDetailsArr.push(stationDetailsObj);
         }  
         this.setState({ stationDetails: stationDetailsArr });
+    }
+
+    processTime(){
+        let timesArr = [];
+        for(var i=0; i<this.state.details.length; i++){
+            let timesArrObj = new Object();
+            if(this.state.details[i].arrivalTime === "---"){
+                timesArrObj.arrivalTime = this.state.details[i].arrivalTime;
+            }
+            if (this.state.details[i].arrivalTime !== "---"){
+                let formattedTime = "";
+                let dateObj = new Date(this.state.details[i].arrivalTime);
+                formattedTime = `${dateObj.getDate()}/${dateObj.getMonth()+1}/${dateObj.getFullYear()}  **  ${dateObj.getHours()}:${dateObj.getMinutes()}`;
+                timesArrObj.arrivalTime = formattedTime;
+            }
+            if(this.state.details[i].departureTime === "---"){
+                timesArrObj.departureTime = this.state.details[i].departureTime;
+            }
+            if (this.state.details[i].departureTime !== "---"){
+                let formattedTime = "";
+                let dateObj = new Date(this.state.details[i].departureTime);
+                formattedTime = `${dateObj.getDate()}/${dateObj.getMonth()+1}/${dateObj.getFullYear()}  **  ${dateObj.getHours()}:${dateObj.getMinutes()}`;
+                timesArrObj.departureTime = formattedTime;
+            }
+            timesArr.push(timesArrObj);
+        }
+        this.setState({ timeDetails: timesArr });
+        this.setFinalDetails();
     }
 
     resolveStation(){
@@ -44,10 +73,10 @@ class TrainDetails extends Component{
                     }
                 }
                 if (this.state.stationCodes.length === stationNames.length){   
-                    console.log(stationNames);
-                    console.log(this.state.stationCodes);
+                    //console.log(stationNames.length);
+                    //console.log(this.state.stationCodes.length);
                     this.setState({ stationNames: stationNames });
-                    this.setFinalDetails();      
+                    this.processTime();      
                 }    
             });
         }
