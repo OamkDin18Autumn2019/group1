@@ -49,8 +49,8 @@ class Nav extends Component {
                         </div>
                     ) : (
                         <div>
-                            <Link to="/"><button>Home</button></Link>
-                             <button onClick={this.logout}>Logout</button>
+                            <Link to="/"><button className='mainFunctionButton'>Home</button></Link>
+                             <button className='mainFunctionButton' onClick={this.logout}>Logout</button>
                         </div>
                     )
                 }
