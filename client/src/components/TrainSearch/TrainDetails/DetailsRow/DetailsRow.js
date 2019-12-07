@@ -6,6 +6,8 @@ const DetailsRow = (props) => (
         <td> {props.detail.stationName} </td>
         <td> {props.detail.arrivalTime} </td>
         <td> {props.detail.departureTime} </td>
+        <td> {props.detail.stayTimeSec} </td>
+        <td> {props.detail.stayTimeHM} </td>
         <td> {props.detail.trackNum} </td>
     </tr>
 );

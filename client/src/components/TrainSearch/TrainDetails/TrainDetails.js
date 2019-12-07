@@ -10,6 +10,7 @@ class TrainDetails extends Component{
             stationDetails: [],
             details: [],
             timeDetails: [],
+            timeDates: [],
             stationCodes: [],
             stationNames: [],
          };        
@@ -27,35 +28,45 @@ class TrainDetails extends Component{
             stationDetailsObj.trackNum = this.state.details[i].trackNum;
             
             stationDetailsArr.push(stationDetailsObj);
-        }  
+        }
+        console.log('data passed on to the DetailsTable component...');  
         this.setState({ stationDetails: stationDetailsArr });
     }
 
     processTime(){
         let timesArr = [];
+        let timeDatesArr = [];
         for(var i=0; i<this.state.details.length; i++){
             let timesArrObj = new Object();
+            let timeDatesArrObj = new Object();
             if(this.state.details[i].arrivalTime === "---"){
                 timesArrObj.arrivalTime = this.state.details[i].arrivalTime;
+                timeDatesArrObj.arrivalTime = this.state.details[i].arrivalTime;
             }
             if (this.state.details[i].arrivalTime !== "---"){
                 let formattedTime = "";
                 let dateObj = new Date(this.state.details[i].arrivalTime);
+                timeDatesArrObj.arrivalTime = dateObj;
                 formattedTime = `${dateObj.getDate()}/${dateObj.getMonth()+1}/${dateObj.getFullYear()}  **  ${dateObj.getHours()}:${dateObj.getMinutes()}`;
                 timesArrObj.arrivalTime = formattedTime;
             }
             if(this.state.details[i].departureTime === "---"){
                 timesArrObj.departureTime = this.state.details[i].departureTime;
+                timeDatesArrObj.departureTime = this.state.details[i].departureTime;
             }
             if (this.state.details[i].departureTime !== "---"){
                 let formattedTime = "";
                 let dateObj = new Date(this.state.details[i].departureTime);
+                timeDatesArrObj.departureTime = dateObj;
                 formattedTime = `${dateObj.getDate()}/${dateObj.getMonth()+1}/${dateObj.getFullYear()}  **  ${dateObj.getHours()}:${dateObj.getMinutes()}`;
                 timesArrObj.departureTime = formattedTime;
             }
             timesArr.push(timesArrObj);
+            timeDatesArr.push(timeDatesArrObj);
         }
         this.setState({ timeDetails: timesArr });
+        this.setState({ timeDates: timeDatesArr });
+        console.log('time values processed and formatted...')
         this.setFinalDetails();
     }
 
@@ -73,9 +84,8 @@ class TrainDetails extends Component{
                     }
                 }
                 if (this.state.stationCodes.length === stationNames.length){   
-                    //console.log(stationNames.length);
-                    //console.log(this.state.stationCodes.length);
                     this.setState({ stationNames: stationNames });
+                    console.log('stations names resolved with data from local database...')
                     this.processTime();      
                 }    
             });
@@ -83,6 +93,7 @@ class TrainDetails extends Component{
     }
 
     loadData(val){
+        console.log('Starting data processing in TrainDetails component.')
         let details = [];
         let detailsObj = undefined;
         let stations = undefined;
@@ -91,7 +102,6 @@ class TrainDetails extends Component{
         fetch(`https://rata.digitraffic.fi/api/v1/trains/latest/${trainNum}`)
         .then(response => response.json())
         .then(data => {
-                console.log('data received from sever for train number')
                 stations = data[0].timeTableRows;
                 let arrivalArr = [];
                 let departureArr = [];
@@ -141,6 +151,7 @@ class TrainDetails extends Component{
                 stationCodes.push(arrivalLast.stationShortCode);
                 this.setState({ stationCodes: stationCodes });
                 this.setState({ details: details });
+                console.log('data received from remote server...')
                 this.resolveStation();                
             }    
         );
@@ -160,7 +171,7 @@ class TrainDetails extends Component{
     render(){
         return(
             <div>
-                <DetailsTable stationDetails={this.state.stationDetails} />
+                <DetailsTable stationDetails={this.state.stationDetails} timeDates={this.state.timeDates} />
             </div>
         );
     }
