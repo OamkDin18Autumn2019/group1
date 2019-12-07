@@ -55,7 +55,7 @@ class TrainSearch extends Component {
 
         return (
             <div>
-                <h2>Select a Train</h2>
+                <h2 className='titleSelection'>Select a Train</h2>
                 <Dropdown 
                     data={this.state.data} 
                     value={this.state.select} 
@@ -69,7 +69,7 @@ class TrainSearch extends Component {
                     onClick={this.handleShowMapClick}
                     buttonText="Display train on map"
                 />
-                <h2>Train Details</h2>
+                <h2 className='titleDetails'>Train Details</h2><br/>
                 <TrainDetails 
                     trainNum={this.state.buttonVal} 
                 />

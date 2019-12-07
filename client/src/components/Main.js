@@ -37,7 +37,7 @@ class Main extends Component {
         return (
             <div>
                 <Nav userFullName={this.state.userFullName} setUserFullName={this.setUserFullName} />
-                <h1>Train Tracker</h1>
+                <h1 className='title'>Train Tracker</h1>
                 <AppRouter 
                     data={this.state.data} setUserFullName={this.setUserFullName}
                 />
