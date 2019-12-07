@@ -159,7 +159,7 @@ code {
 /*Register and Login forms*/
 .tableRow { 
     position:relative; 
-    margin-bottom:45px; 
+    margin-bottom:16px; 
     text-align: center;
   }
   input {
@@ -181,10 +181,10 @@ code {
     color: rgb(228, 222, 222) ; 
     font-size:18px;
     font-weight:normal;
-    position:absolute;
+    position: relative;;
     pointer-events:none;
-    left: 485px;
-    top: 12px;
+    right: 100px;
+    top: -25px;
     transition:0.2s ease all; 
     -moz-transition:0.2s ease all; 
     -webkit-transition:0.2s ease all;
@@ -192,7 +192,7 @@ code {
   
   /* active state */
   input:focus ~ label, input:valid ~ label {
-    top:-20px;
+    top:-50px;
     font-size:14px;
     color:rgb(70, 90, 172);
   }
