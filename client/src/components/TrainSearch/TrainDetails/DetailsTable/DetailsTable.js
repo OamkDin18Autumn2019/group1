@@ -74,6 +74,7 @@ class DetailsTable extends Component{
         return(
             <table className='table-style'>
             <thead>
+                <th>Select</th>
                 <th>Station Name</th>
                 <th>Arrival Time</th>
                 <th>Departure Time</th>
