@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import DetailsTable from './DetailsTable/DetailsTable'
+import StationSearch from './StationSearch/StationSearch'
 
 class TrainDetails extends Component{
 
@@ -11,11 +12,14 @@ class TrainDetails extends Component{
             details: [],
             stationCodes: [],
             stationNames: [],
+            query: "",
+            filteredStationDetails: []
          };        
     }
     
     setFinalDetails(){
         let stationDetailsArr = [];
+        const { query } = this.state
         for (var i=0; i<this.state.details.length; i++) {
             
             let stationDetailsObj = new Object();
@@ -27,7 +31,12 @@ class TrainDetails extends Component{
             
             stationDetailsArr.push(stationDetailsObj);
         }  
-        this.setState({ stationDetails: stationDetailsArr });
+
+        const filteredStationDetails = stationDetailsArr.filter(element => {
+            return element.stationName.toLowerCase().includes(query.toLowerCase())
+        })
+
+        this.setState({ stationDetails: stationDetailsArr, filteredStationDetails });
     }
 
     resolveStation(){
@@ -117,8 +126,21 @@ class TrainDetails extends Component{
         );
     }
 
+    handleInputChange = (e) => {
+        const query = e.target.value
 
-    
+        this.setState(prevState => {
+            const filteredStationDetails = prevState.stationDetails.filter(element => {
+                return element.stationName.toLowerCase().includes(query.toLowerCase())
+            })
+
+            return {
+                query,
+                filteredStationDetails
+            }
+        })
+    }
+
     componentDidMount(){
     }
 
@@ -126,12 +148,14 @@ class TrainDetails extends Component{
         if(this.props.trainNum !== prevProps.trainNum){
             this.loadData(this.props.trainNum);
         }
+        console.log(this.state.filteredStationDetails)
     }
 
     render(){
         return(
             <div>
-                <DetailsTable stationDetails={this.state.stationDetails} />
+                <StationSearch handleInputChange={this.handleInputChange} value={this.state.query} />
+                <DetailsTable stationDetails={this.state.filteredStationDetails} />
             </div>
         );
     }
