@@ -4,17 +4,23 @@ class DetailsRow extends Component{
     constructor(){
         super();
         this.state ={
-            checked: false
+
         };
     }
 
     handleCheckBox = event => {
-        this.setState({ checked: event.target.checked });
         let selectedStation = new Object();
-        selectedStation.status = this.state.checked;
+        selectedStation.status = event.target.checked;
+        selectedStation.id = this.props.orderNum;
         selectedStation.stationName = this.props.detail.stationName;
-        selectedStation.arrivalTime = this.props.detail.arrivalTime;
-        console.log(selectedStation);
+        if(this.props.detail.arrivalTime === '---'){
+            selectedStation.timeStamp = this.props.detail.departureTimeDateObj;
+        }else if (this.props.detail.departureTime = '---'){
+            selectedStation.timeStamp = this.props.detail.arrivalTimeDateObj;
+        }else{
+            selectedStation.timeStamp = this.props.detail.arrivalTimeDateObj;
+        }
+        this.props.selectionHandler(selectedStation);
     }
 
     render(){
