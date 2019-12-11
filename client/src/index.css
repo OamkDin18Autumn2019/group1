@@ -1,17 +1,21 @@
-body {
-    margin: 0;
+
+ html {
+    margin: 0px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    width: 100%;
-    height: 150vh;
-    font-family: "Exo", sans-serif;
     color: #fff;
-    background: rgb(178, 221, 93);
-}
-
+    height: 100%;
+    /* max-height: 600px; */
+    width: 100%;
+    background-image: linear-gradient(to bottom,  rgba(255,168,76,0.6) 0%,rgba(255,123,13,0.6) 100%), url('https://images.unsplash.com/photo-1446824505046-e43605ffb17f');
+	background-blend-mode: soft-light;
+	background-size: cover;
+	background-position: center center;
+ }
+    
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -79,12 +83,12 @@ code {
 
 /*Style buttons*/
 .mainFunctionButton {
-    color: #20bf6b !important;
+    color: #b16116 !important;
     margin: 5px;
     text-transform: uppercase;
     background: #ffffff;
     padding: 12px;
-    border: 4px solid #20bf6b !important;
+    border: 4px solid #b16116 !important;
     border-radius: 6px;
     display: inline-block;
     transition: all 0.3s ease 0s;
@@ -275,3 +279,26 @@ th, td {
 }
   
 tr:hover {background-color:#7c7c7c;}
+
+/*Style Dropdown*/
+.Dropdown {
+    background-color: rgb(255, 255, 255);
+    color: #b16116;
+    padding: 9px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid #b16116;
+}
+.Dropdown-content {
+    position: absolute;
+    background-color: whitesmoke;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    color: #b16116;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}

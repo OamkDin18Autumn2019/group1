@@ -10,13 +10,13 @@ class Dropdown extends Component {
     // option map function for dropdown
     optionMap = () => {
         return this.state.data.map((number, index) => {
-            return <option key={index} value={number.trainNumber}>{number.trainNumber}</option>
+            return <option className="Dropdown-content" key={index} value={number.trainNumber}>{number.trainNumber}</option>
         })
     }
 
     render() {
         return (
-            <select value={this.props.select} onChange={this.props.onChange}>
+            <select className="Dropdown" value={this.props.select} onChange={this.props.onChange}>
                 {this.optionMap()}
             </select>
         )

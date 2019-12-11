@@ -8,7 +8,7 @@ class Nav extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            routes: ["Home", "Login", "Register"]
+            routes: ["Home", "Login", "Register", "History"]
         }
     }
 
@@ -34,7 +34,7 @@ class Nav extends Component {
                     this.props.userFullName == null ? (
                         <div className='titleGreeting'>Hello visitor! You must login, if you do not have account, please register at first.</div>
                     ) : (
-                        <div>Hello { this.props.userFullName }!</div>
+                        <div className='titleGreeting'>Hello { this.props.userFullName }!</div>
                     )
                 }
 
@@ -50,7 +50,8 @@ class Nav extends Component {
                     ) : (
                         <div>
                             <Link to="/"><button className='mainFunctionButton'>Home</button></Link>
-                             <button className='mainFunctionButton' onClick={this.logout}>Logout</button>
+                            <Link to="/history"><button className='mainFunctionButton'>History</button></Link>
+                                <button className='mainFunctionButton' onClick={this.logout}>Logout</button>
                         </div>
                     )
                 }

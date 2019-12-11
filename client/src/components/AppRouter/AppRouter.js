@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom'
 import MainView from './Views/MainView'
 import LoginView from './Views/LoginView'
 import RegisterView from './Views/RegisterView'
+import History from './Views/History'
 
 class AppRouter extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class AppRouter extends Component {
                 <Route exact path='/' render={props => <MainView {...props} data={this.state.data} />} />
                 <Route exact path="/register" render={ props => <RegisterView  {...props} /> }/>
                 <Route exact path="/login"    render={ props => <LoginView     {...props} setUserFullName={this.props.setUserFullName} /> }/>
+                <Route exact path="/history"  render={ props => <History  {...props} /> }/>
             </div>
         )
     }
