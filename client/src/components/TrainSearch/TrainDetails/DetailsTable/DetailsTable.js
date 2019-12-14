@@ -19,11 +19,11 @@ class DetailsTable extends Component{
         this.resetSelection = this.resetSelection.bind(this);
     }
 
-    handleRowSelection(obj){    
+    handleRowSelection(obj){
+        this.props.getSelectedStations(obj);    
         let selectedRowsArr = this.state.selectedRows;
         selectedRowsArr.push(obj);
         this.setState({selectedRows: selectedRowsArr});
-        this.props.getSelectedStations(selectedRowsArr);
     }
 
     processSelectedRows(){
@@ -110,6 +110,15 @@ class DetailsTable extends Component{
     }
 
     render(){
+        for (var i=0; i<this.props.stationDetails.length; i++){
+            for(var j=0; j<this.props.stationsSelected.length; j++){
+                if(this.props.stationDetails[i].id === this.props.stationsSelected[j].id){
+                    this.props.stationDetails[i].checked = true;
+                }
+            }
+            this.props.stationDetails[i].currentLength = this.props.stationDetails.length;
+        }
+        console.log(this.props.stationDetails);
         let detailRows = this.props.stationDetails.map(row => <DetailsRow detail={row} orderNum={row.id} selectionHandler={this.handleRowSelection} />);
         return(
             <div> 

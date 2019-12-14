@@ -22,8 +22,11 @@ class DetailsRow extends Component{
             selectedStation.timeStamp = this.props.detail.arrivalTimeDateObj;
         }
         this.props.selectionHandler(selectedStation);
-        this.setState({checked: status});
-
+        if(this.props.detail.fullLength === this.props.detail.currentLength){
+            this.setState({checked: status});
+        }else{
+            this.setState({checked: !status});
+        }
     }
 
     render(){

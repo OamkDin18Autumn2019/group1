@@ -8,6 +8,7 @@ class TrainDetails extends Component{
     constructor(){
         super();
         this.state = {
+            timeDiff: [],
             selectedStations: [],
             stationDetails: [],
             details: [],
@@ -21,12 +22,54 @@ class TrainDetails extends Component{
         this.getSelection = this.getSelection.bind(this);
     }
 
-    getSelection(arr){
-        this.setState({selectedStations: arr});
-        console.log(arr);
+    setDetailsAfterSelection(){
+        let selectedStations = this.state.selectedStations;
+        let timeArr = this.state.timeDiff;
+        let timeDates = this.state.timeDates;
+        let stationDetailsArr = [];
+        for (var i=0; i<this.state.details.length; i++) {
+            
+            let stationDetailsObj = new Object();
+
+            let timeStr = undefined;
+            if(timeArr[i].hours === undefined){
+                timeStr = '---';
+            }else{
+                timeStr = `${timeArr[i].hours} : ${timeArr[i].minutes}`;
+            }
+            
+            stationDetailsObj.fullLength = this.state.details.length;
+            stationDetailsObj.currentLength = 0;
+            stationDetailsObj.stationName = this.state.stationNames[i];
+            stationDetailsObj.arrivalTime = this.state.timeDetails[i].arrivalTime;
+            stationDetailsObj.departureTime = this.state.timeDetails[i].departureTime;
+            stationDetailsObj.trackNum = this.state.details[i].trackNum;
+            stationDetailsObj.stayTimeSec = timeArr[i].seconds;
+            stationDetailsObj.stayTimeHM = timeStr;
+            stationDetailsObj.arrivalTimeDateObj = timeDates[i].arrivalTime;
+            stationDetailsObj.departureTimeDateObj = timeDates[i].departureTime;
+            stationDetailsObj.id = i;
+            for(var j=0; j<selectedStations.length; j++){
+                if(i === selectedStations[j].id){
+                    stationDetailsObj.checked = true;
+                }else{
+                    stationDetailsObj.checked = false;
+                }
+            }
+            stationDetailsArr.push(stationDetailsObj);
+        }
+        this.setState({filteredStationDetails: stationDetailsArr});
     }
 
-    setFinalDetails(timeArr){
+    getSelection(obj){
+        let selectedStationArr = this.state.selectedStations;
+        selectedStationArr.push(obj);
+        this.setState({selectedStations: selectedStationArr});
+        this.setDetailsAfterSelection();
+    }
+
+    setFinalDetails(){
+        let timeArr = this.state.timeDiff;
         let timeDates = this.state.timeDates;
         let stationDetailsArr = [];
         const { query } = this.state
@@ -41,6 +84,8 @@ class TrainDetails extends Component{
                 timeStr = `${timeArr[i].hours} : ${timeArr[i].minutes}`;
             }
             
+            stationDetailsObj.fullLength = this.state.details.length;
+            stationDetailsObj.currentLength = 0;
             stationDetailsObj.stationName = this.state.stationNames[i];
             stationDetailsObj.arrivalTime = this.state.timeDetails[i].arrivalTime;
             stationDetailsObj.departureTime = this.state.timeDetails[i].departureTime;
@@ -91,7 +136,8 @@ class TrainDetails extends Component{
                 timeDiffsArr.push(timeDiffsArrObj);
             }
         }
-        this.setFinalDetails(timeDiffsArr);
+        this.setState({timeDiff: timeDiffsArr});
+        this.setFinalDetails();
     }
 
     processTime(){
@@ -233,7 +279,7 @@ class TrainDetails extends Component{
         })
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps){
         if(this.props.trainNum !== prevProps.trainNum){
             this.loadData(this.props.trainNum);
         }
@@ -244,7 +290,7 @@ class TrainDetails extends Component{
         return(
             <div>
                 <StationSearch handleInputChange={this.handleInputChange} value={this.state.query} />
-                <DetailsTable stationDetails={this.state.filteredStationDetails} getSelectedStations={this.getSelection} />
+                <DetailsTable stationDetails={this.state.filteredStationDetails} getSelectedStations={this.getSelection} stationsSelected={this.state.selectedStations} />
             </div>
         );
     }
