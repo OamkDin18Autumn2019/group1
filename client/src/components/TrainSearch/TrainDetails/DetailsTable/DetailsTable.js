@@ -103,6 +103,7 @@ class DetailsTable extends Component{
     }
 
     resetSelection(){
+        this.props.resetProcessor();
         this.setState({ startingStation: "" });
         this.setState({ endingStation: "" });
         this.setState({ travelTime: "" });
@@ -118,7 +119,6 @@ class DetailsTable extends Component{
             }
             this.props.stationDetails[i].currentLength = this.props.stationDetails.length;
         }
-        console.log(this.props.stationDetails);
         let detailRows = this.props.stationDetails.map(row => <DetailsRow detail={row} orderNum={row.id} selectionHandler={this.handleRowSelection} />);
         return(
             <div> 

@@ -20,6 +20,11 @@ class TrainDetails extends Component{
             filteredStationDetails: []
          };
         this.getSelection = this.getSelection.bind(this);
+        this.processReset = this.processReset.bind(this);
+    }
+
+    processReset(){
+        this.setState({ selectedStations: [] });
     }
 
     setDetailsAfterSelection(){
@@ -290,7 +295,7 @@ class TrainDetails extends Component{
         return(
             <div>
                 <StationSearch handleInputChange={this.handleInputChange} value={this.state.query} />
-                <DetailsTable stationDetails={this.state.filteredStationDetails} getSelectedStations={this.getSelection} stationsSelected={this.state.selectedStations} />
+                <DetailsTable stationDetails={this.state.filteredStationDetails} getSelectedStations={this.getSelection} stationsSelected={this.state.selectedStations} resetProcessor={this.processReset} />
             </div>
         );
     }
