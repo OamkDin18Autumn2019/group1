@@ -302,3 +302,10 @@ tr:hover {background-color:#7c7c7c;}
     text-decoration: none;
     display: block;
 }
+/*Style Display Travel Time*/
+.displayTravelTime {
+    color:floralwhite;
+    font-size: 22px;
+    position: relative;
+    margin:0;
+}
