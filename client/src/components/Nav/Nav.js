@@ -8,7 +8,7 @@ class Nav extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            routes: ["Home", "Login", "Register"]
+            routes: ["Home", "Login", "Register", "History"]
         }
     }
 
@@ -32,9 +32,9 @@ class Nav extends Component {
             <div>
                 { /* If user has not login (userFullName is null) then show visitor text and instuctions, otherwise show user fullname */
                     this.props.userFullName == null ? (
-                        <div>Hello visitor! You must login, if you do not have account, please register at first.</div>
+                        <div className='titleGreeting'>Hello visitor! You must login, if you do not have account, please register at first.</div>
                     ) : (
-                        <div>Hello { this.props.userFullName }!</div>
+                        <div className='titleGreeting'>Hello { this.props.userFullName }!</div>
                     )
                 }
 
@@ -43,14 +43,15 @@ class Nav extends Component {
                 { /* If user has not login (userFullName is null) then show Home, Login and Register buttons, otherwise show Home and Logout buttons */
                     this.props.userFullName == null ? (
                         <div>
-                            <Link to="/"><button>Home</button></Link>
-                            <Link to="/login"><button>Login</button></Link>
-                            <Link to="/register"><button>Register</button></Link>
+                            <Link to="/"><button className='mainFunctionButton'>Home</button></Link>
+                            <Link to="/login"><button className='mainFunctionButton'>Login</button></Link>
+                            <Link to="/register"><button className='mainFunctionButton'>Register</button></Link>
                         </div>
                     ) : (
                         <div>
-                            <Link to="/"><button>Home</button></Link>
-                             <button onClick={this.logout}>Logout</button>
+                            <Link to="/"><button className='mainFunctionButton'>Home</button></Link>
+                            <Link to="/history"><button className='mainFunctionButton'>History</button></Link>
+                                <button className='mainFunctionButton' onClick={this.logout}>Logout</button>
                         </div>
                     )
                 }

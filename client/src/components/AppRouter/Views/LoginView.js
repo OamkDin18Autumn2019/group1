@@ -37,27 +37,34 @@ class LoginView extends Component {
 
     // Otherwise show login form
     return (
-      <div>
-        <h2>User login</h2>
-        <div>To login, enter your username and password</div>
+        <div>
+        <h2 className='titleLogin'>User login</h2><br/>
+        <div style={{textAlign: "center"}}>To login, enter your username and password</div>
         <br/>
         <form onSubmit={ this.userLogin }>
-          <div className="tableNoBorder">
-            <div className="tableRow">
-              <div className="tableCellNoBorder"> Username: </div>
-              <div className="tableCellNoBorder"> <input type="text" name="username" /> </div>
+            <div className="tableNoBorder">
+
+                <div className="tableRow">
+                    <input type="text" name="username" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Username...</label>
+                </div>
+
+                <div className="tableRow">
+                    <input type="password" name="password" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Password...</label>
+                </div>
+
+                <div className="tableRow">
+                    <div className="tableCellNoBorder"> <button className='extraFunctionButton' type="submit"><span>Login</span></button> </div>
+                    <div className="tableCellNoBorder"> <Link to="/"><button className='extraFunctionButton'><span>Cancel</span></button></Link> </div>
+                </div>
             </div>
-            <div className="tableRow">
-              <div className="tableCellNoBorder"> Password: </div>
-              <div className="tableCellNoBorder"> <input type="password" name="password" /> </div>
-            </div>
-            <div className="tableRow">
-              <div className="tableCellNoBorder"> <br/>  <button type="submit">Login</button> </div>
-              <div className="tableCellNoBorder"> <br/>  <Link to="/"><button>Cancel</button></Link> </div>
-            </div>
-          </div>
         </form>
-      </div>
+        </div>
     )
   }
 

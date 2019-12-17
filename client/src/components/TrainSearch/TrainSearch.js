@@ -5,6 +5,7 @@ import Dropdown from './Dropdown/Dropdown'
 import Button from './Button/Button'
 import TrainDetails from './TrainDetails/TrainDetails'
 import MapContainer from './Map/Map'
+import SaveSearch from './SaveSearch/SaveSearch'
 
 class TrainSearch extends Component {
     constructor(props) {
@@ -55,7 +56,7 @@ class TrainSearch extends Component {
 
         return (
             <div>
-                <h2>Select a Train</h2>
+                <h2 className='titleSelection'>Select a Train</h2>
                 <Dropdown 
                     data={this.state.data} 
                     value={this.state.select} 
@@ -69,10 +70,12 @@ class TrainSearch extends Component {
                     onClick={this.handleShowMapClick}
                     buttonText="Display train on map"
                 />
-                <h2>Train Details</h2>
+                <h2 className='titleDetails'>Train Details</h2><br/>
                 <TrainDetails 
                     trainNum={this.state.buttonVal} 
                 />
+                <h2>Save results in database (requires login)</h2>
+                <SaveSearch />
             </div>
         )
     }

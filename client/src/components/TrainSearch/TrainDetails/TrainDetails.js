@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import DetailsTable from './DetailsTable/DetailsTable'
+import StationSearch from './StationSearch/StationSearch'
 
 class TrainDetails extends Component{
 
@@ -9,25 +10,74 @@ class TrainDetails extends Component{
         this.state = { 
             stationDetails: [],
             details: [],
+            timeDetails: [],
+            timeDates: [],
             stationCodes: [],
             stationNames: [],
+            query: "",
+            filteredStationDetails: []
          };        
     }
     
     setFinalDetails(){
         let stationDetailsArr = [];
+        const { query } = this.state
         for (var i=0; i<this.state.details.length; i++) {
             
             let stationDetailsObj = new Object();
             
             stationDetailsObj.stationName = this.state.stationNames[i];
-            stationDetailsObj.arrivalTime = this.state.details[i].arrivalTime;
-            stationDetailsObj.departureTime = this.state.details[i].departureTime;
+            stationDetailsObj.arrivalTime = this.state.timeDetails[i].arrivalTime;
+            stationDetailsObj.departureTime = this.state.timeDetails[i].departureTime;
             stationDetailsObj.trackNum = this.state.details[i].trackNum;
             
             stationDetailsArr.push(stationDetailsObj);
         }  
-        this.setState({ stationDetails: stationDetailsArr });
+
+        const filteredStationDetails = stationDetailsArr.filter(element => {
+            return element.stationName.toLowerCase().includes(query.toLowerCase())
+        })
+
+        this.setState({ stationDetails: stationDetailsArr, filteredStationDetails });
+        console.log('data passed on to the DetailsTable component...');  
+
+    }
+
+    processTime(){
+        let timesArr = [];
+        let timeDatesArr = [];
+        for(var i=0; i<this.state.details.length; i++){
+            let timesArrObj = new Object();
+            let timeDatesArrObj = new Object();
+            if(this.state.details[i].arrivalTime === "---"){
+                timesArrObj.arrivalTime = this.state.details[i].arrivalTime;
+                timeDatesArrObj.arrivalTime = this.state.details[i].arrivalTime;
+            }
+            if (this.state.details[i].arrivalTime !== "---"){
+                let formattedTime = "";
+                let dateObj = new Date(this.state.details[i].arrivalTime);
+                timeDatesArrObj.arrivalTime = dateObj;
+                formattedTime = `${dateObj.getDate()}/${dateObj.getMonth()+1}/${dateObj.getFullYear()}  **  ${dateObj.getHours()}:${dateObj.getMinutes()}`;
+                timesArrObj.arrivalTime = formattedTime;
+            }
+            if(this.state.details[i].departureTime === "---"){
+                timesArrObj.departureTime = this.state.details[i].departureTime;
+                timeDatesArrObj.departureTime = this.state.details[i].departureTime;
+            }
+            if (this.state.details[i].departureTime !== "---"){
+                let formattedTime = "";
+                let dateObj = new Date(this.state.details[i].departureTime);
+                timeDatesArrObj.departureTime = dateObj;
+                formattedTime = `${dateObj.getDate()}/${dateObj.getMonth()+1}/${dateObj.getFullYear()}  **  ${dateObj.getHours()}:${dateObj.getMinutes()}`;
+                timesArrObj.departureTime = formattedTime;
+            }
+            timesArr.push(timesArrObj);
+            timeDatesArr.push(timeDatesArrObj);
+        }
+        this.setState({ timeDetails: timesArr });
+        this.setState({ timeDates: timeDatesArr });
+        console.log('time values processed and formatted...')
+        this.setFinalDetails();
     }
 
     resolveStation(){
@@ -44,16 +94,16 @@ class TrainDetails extends Component{
                     }
                 }
                 if (this.state.stationCodes.length === stationNames.length){   
-                    console.log(stationNames);
-                    console.log(this.state.stationCodes);
                     this.setState({ stationNames: stationNames });
-                    this.setFinalDetails();      
+                    console.log('stations names resolved with data from local database...')
+                    this.processTime();      
                 }    
             });
         }
     }
 
     loadData(val){
+        console.log('Starting data processing in TrainDetails component.')
         let details = [];
         let detailsObj = undefined;
         let stations = undefined;
@@ -62,7 +112,6 @@ class TrainDetails extends Component{
         fetch(`https://rata.digitraffic.fi/api/v1/trains/latest/${trainNum}`)
         .then(response => response.json())
         .then(data => {
-                console.log('data received from sever for train number')
                 stations = data[0].timeTableRows;
                 let arrivalArr = [];
                 let departureArr = [];
@@ -112,13 +161,27 @@ class TrainDetails extends Component{
                 stationCodes.push(arrivalLast.stationShortCode);
                 this.setState({ stationCodes: stationCodes });
                 this.setState({ details: details });
+                console.log('data received from remote server...')
                 this.resolveStation();                
             }    
         );
     }
 
+    handleInputChange = (e) => {
+        const query = e.target.value
 
-    
+        this.setState(prevState => {
+            const filteredStationDetails = prevState.stationDetails.filter(element => {
+                return element.stationName.toLowerCase().includes(query.toLowerCase())
+            })
+
+            return {
+                query,
+                filteredStationDetails
+            }
+        })
+    }
+
     componentDidMount(){
     }
 
@@ -126,12 +189,14 @@ class TrainDetails extends Component{
         if(this.props.trainNum !== prevProps.trainNum){
             this.loadData(this.props.trainNum);
         }
+        console.log(this.state.filteredStationDetails)
     }
 
     render(){
         return(
             <div>
-                <DetailsTable stationDetails={this.state.stationDetails} />
+                <StationSearch handleInputChange={this.handleInputChange} value={this.state.query} />
+                <DetailsTable stationDetails={this.state.filteredStationDetails} timeDates={this.state.timeDates} />
             </div>
         );
     }
