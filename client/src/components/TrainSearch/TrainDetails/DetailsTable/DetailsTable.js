@@ -136,6 +136,7 @@ class DetailsTable extends Component{
                 </table>
                 <p></p>
                 <Button className='displayButton' onClick={this.processSelectedRows} buttonText="Display travel time"/>
+                <Button className='displayButton' onClick={this.resetSelection} buttonText="Reset Selection"/>
                 <p className='displayTravelTime'>First station in selection list: {this.state.startingStation}</p>
                 <p className='displayTravelTime'>Last station in selection list: {this.state.endingStation}</p>
                 <p className='displayTravelTime'>Travel time between stations: {this.state.travelTime}</p>
