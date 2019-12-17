@@ -135,11 +135,10 @@ class DetailsTable extends Component{
                     <tbody> {detailRows} </tbody>
                 </table>
                 <p></p>
-                <Button onClick={this.processSelectedRows} buttonText="Display travel time"/>
-                <Button onClick={this.resetSelection} buttonText="Reset Selection"/>
-                <p>First station in selection list: {this.state.startingStation}</p>
-                <p>Last station in selection list: {this.state.endingStation}</p>
-                <p>Travel time between stations: {this.state.travelTime}</p>
+                <Button className='displayButton' onClick={this.processSelectedRows} buttonText="Display travel time"/>
+                <p className='displayTravelTime'>First station in selection list: {this.state.startingStation}</p>
+                <p className='displayTravelTime'>Last station in selection list: {this.state.endingStation}</p>
+                <p className='displayTravelTime'>Travel time between stations: {this.state.travelTime}</p>
            </div> 
 
         );

@@ -45,31 +45,41 @@ class RegisterView extends Component {
 
     // Otherwise show registration form
     return (
-      <div>
-        <h2> User registration </h2>
-        <div>To register, please enter your full name, username and password</div>
-        <br/>
-        <form onSubmit={ this.userRegister }>
-          <div className="tableNoBorder">
-            <div className="tableRow">
-              <div className="tableCellNoBorder"> Full name: </div>
-              <div className="tableCellNoBorder"> <input type="text" name="full_name" /> </div>
-            </div>
-            <div className="tableRow">
-              <div className="tableCellNoBorder"> Username: </div>
-              <div className="tableCellNoBorder"> <input type="text" name="username" /> </div>
-            </div>
-            <div className="tableRow">
-              <div className="tableCellNoBorder"> Password: </div>
-              <div className="tableCellNoBorder"> <input type="password" name="password" /> </div>
-            </div>
-            <div className="tableRow">
-              <div className="tableCellNoBorder"> <br/>  <button type="submit">Register</button> </div>
-              <div className="tableCellNoBorder"> <br/>  <Link to="/"><button>Cancel</button></Link> </div>
-            </div>
-          </div>
-        </form>
-      </div>
+        <div>
+            <h2 className='titleRegister'> User registration </h2><br/>
+            <div style={{textAlign: "center"}}>To register, please enter your full name, username and password</div>
+            <br/>
+            <form onSubmit={ this.userRegister }>
+                <div className="tableNoBorder">
+            
+                <div className="tableRow">            
+                    <input type="text" name="full_name" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Full name...</label>
+                </div>
+
+                <div className="tableRow">            
+                    <input type="text" name="username" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Username...</label>
+                </div>
+
+                <div className="tableRow">            
+                    <input type="password" name="password" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Password...</label>
+                </div>
+            
+                <div className="tableRow">
+                    <div className="tableCellNoBorder"> <button className='extraFunctionButton' type="submit"><span>Register</span></button> </div>
+                    <div className="tableCellNoBorder"> <Link to="/"><button className='extraFunctionButton'><span>Cancel</span></button></Link> </div>
+                </div>
+                </div>
+            </form>
+        </div>
     )
   }
 
