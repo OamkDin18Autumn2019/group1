@@ -11,9 +11,10 @@
     /* max-height: 600px; */
     width: 100%;
 	background: url(https://docs.google.com/uc?export=download&id=0B2PO2Lr7Bv2QSXhkaG1VaEhSTjA);
-	background-repeat: repeat-x;
+    background-repeat: repeat-x;
+    background-size: cover;
 	background-position: center center;
-	background-size: cover;
+	
  }
  body {
 	margin: 0 !important;
