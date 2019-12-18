@@ -6,7 +6,7 @@
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #fff;
+    color: black;
     height: 100%;
     /* max-height: 600px; */
     width: 100%;
@@ -38,7 +38,7 @@ code {
 
 /*Style big titles and pages'titles*/
 .title {
-    color: floralwhite;
+    color: black;
     text-align: center;
     font-style: italic;
     font-size: 45px;
@@ -67,14 +67,14 @@ code {
     margin:0;
 }
 .titleRegister {
-    color:floralwhite;
+    color:black;
     text-align: center;
     font-size: 30px;
     position: relative;
     margin:0;
 }
 .titleLogin {
-    color:floralwhite;
+    color:black;
     text-align: center;
     font-size: 30px;
     position: relative;
@@ -168,7 +168,7 @@ code {
   }
   input {
     font-size:15px;
-    color: white;
+    color: black;
     padding:10px 10px 10px 5px;
     display:block;
     width:300px;
@@ -182,7 +182,7 @@ code {
   
   /* LABEL ======================================= */
   label {
-    color: rgb(228, 222, 222) ; 
+    color: black;
     font-size:18px;
     font-weight:normal;
     position: relative;;
