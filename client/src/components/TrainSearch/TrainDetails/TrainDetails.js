@@ -7,7 +7,9 @@ class TrainDetails extends Component{
 
     constructor(){
         super();
-        this.state = { 
+        this.state = {
+            timeDiff: [],
+            selectedStations: [],
             stationDetails: [],
             details: [],
             timeDetails: [],
@@ -16,23 +18,92 @@ class TrainDetails extends Component{
             stationNames: [],
             query: "",
             filteredStationDetails: []
-         };        
+         };
+        this.getSelection = this.getSelection.bind(this);
+        this.processReset = this.processReset.bind(this);
     }
-    
+
+    processReset(){
+        this.setState({ selectedStations: [] });
+    }
+
+    setDetailsAfterSelection(){
+        let selectedStations = this.state.selectedStations;
+        let timeArr = this.state.timeDiff;
+        let timeDates = this.state.timeDates;
+        let stationDetailsArr = [];
+        for (var i=0; i<this.state.details.length; i++) {
+            
+            let stationDetailsObj = new Object();
+
+            let timeStr = undefined;
+            if(timeArr[i].hours === undefined){
+                timeStr = '---';
+            }else{
+                timeStr = `${timeArr[i].hours} : ${timeArr[i].minutes}`;
+            }
+            
+            stationDetailsObj.fullLength = this.state.details.length;
+            stationDetailsObj.currentLength = 0;
+            stationDetailsObj.stationName = this.state.stationNames[i];
+            stationDetailsObj.arrivalTime = this.state.timeDetails[i].arrivalTime;
+            stationDetailsObj.departureTime = this.state.timeDetails[i].departureTime;
+            stationDetailsObj.trackNum = this.state.details[i].trackNum;
+            stationDetailsObj.stayTimeSec = timeArr[i].seconds;
+            stationDetailsObj.stayTimeHM = timeStr;
+            stationDetailsObj.arrivalTimeDateObj = timeDates[i].arrivalTime;
+            stationDetailsObj.departureTimeDateObj = timeDates[i].departureTime;
+            stationDetailsObj.id = i;
+            for(var j=0; j<selectedStations.length; j++){
+                if(i === selectedStations[j].id){
+                    stationDetailsObj.checked = true;
+                }else{
+                    stationDetailsObj.checked = false;
+                }
+            }
+            stationDetailsArr.push(stationDetailsObj);
+        }
+        this.setState({filteredStationDetails: stationDetailsArr});
+    }
+
+    getSelection(obj){
+        let selectedStationArr = this.state.selectedStations;
+        selectedStationArr.push(obj);
+        this.setState({selectedStations: selectedStationArr});
+        this.setDetailsAfterSelection();
+    }
+
     setFinalDetails(){
+        let timeArr = this.state.timeDiff;
+        let timeDates = this.state.timeDates;
         let stationDetailsArr = [];
         const { query } = this.state
         for (var i=0; i<this.state.details.length; i++) {
             
             let stationDetailsObj = new Object();
+
+            let timeStr = undefined;
+            if(timeArr[i].hours === undefined){
+                timeStr = '---';
+            }else{
+                timeStr = `${timeArr[i].hours} : ${timeArr[i].minutes}`;
+            }
             
+            stationDetailsObj.fullLength = this.state.details.length;
+            stationDetailsObj.currentLength = 0;
             stationDetailsObj.stationName = this.state.stationNames[i];
             stationDetailsObj.arrivalTime = this.state.timeDetails[i].arrivalTime;
             stationDetailsObj.departureTime = this.state.timeDetails[i].departureTime;
             stationDetailsObj.trackNum = this.state.details[i].trackNum;
+            stationDetailsObj.stayTimeSec = timeArr[i].seconds;
+            stationDetailsObj.stayTimeHM = timeStr;
+            stationDetailsObj.arrivalTimeDateObj = timeDates[i].arrivalTime;
+            stationDetailsObj.departureTimeDateObj = timeDates[i].departureTime;
+            stationDetailsObj.id = i;
+            stationDetailsObj.checked = false;
             
             stationDetailsArr.push(stationDetailsObj);
-        }  
+        }
 
         const filteredStationDetails = stationDetailsArr.filter(element => {
             return element.stationName.toLowerCase().includes(query.toLowerCase())
@@ -40,7 +111,38 @@ class TrainDetails extends Component{
 
         this.setState({ stationDetails: stationDetailsArr, filteredStationDetails });
         console.log('data passed on to the DetailsTable component...');  
-
+    }
+    
+    calculateIntervals(){
+        console.log("data processing started in DetailsTable component");
+        let timeDates = this.state.timeDates;
+        let timeDiffsArr = [];
+        for (var i=0; i<timeDates.length; i++){
+            if(timeDates[i].arrivalTime === '---' || timeDates[i].departureTime === '---'){
+                timeDiffsArr.push('---');
+            }else{
+                let milliSecDiff = undefined;
+                let secDiff = undefined;
+                let minDiff = 0;
+                let hourDiff = 0;
+                let timeDiffsArrObj = new Object();
+                
+                milliSecDiff = timeDates[i].departureTime.getTime()-timeDates[i].arrivalTime.getTime();
+                secDiff = milliSecDiff/1000;
+                timeDiffsArrObj.seconds = secDiff;
+                if(secDiff>60){
+                    minDiff = Math.floor(secDiff/60);
+                }
+                if(minDiff>60){
+                    hourDiff = Math.floor(minDiff/60);
+                }
+                timeDiffsArrObj.hours = hourDiff;
+                timeDiffsArrObj.minutes = minDiff;
+                timeDiffsArr.push(timeDiffsArrObj);
+            }
+        }
+        this.setState({timeDiff: timeDiffsArr});
+        this.setFinalDetails();
     }
 
     processTime(){
@@ -76,8 +178,8 @@ class TrainDetails extends Component{
         }
         this.setState({ timeDetails: timesArr });
         this.setState({ timeDates: timeDatesArr });
-        console.log('time values processed and formatted...')
-        this.setFinalDetails();
+        this.calculateIntervals();
+        console.log('time values processed and formatted...');
     }
 
     resolveStation(){
@@ -101,7 +203,7 @@ class TrainDetails extends Component{
             });
         }
     }
-
+ 
     loadData(val){
         console.log('Starting data processing in TrainDetails component.')
         let details = [];
@@ -182,21 +284,18 @@ class TrainDetails extends Component{
         })
     }
 
-    componentDidMount(){
-    }
-
     componentDidUpdate(prevProps){
         if(this.props.trainNum !== prevProps.trainNum){
             this.loadData(this.props.trainNum);
         }
-        console.log(this.state.filteredStationDetails)
+        //console.log(this.state.filteredStationDetails)
     }
 
     render(){
         return(
             <div>
                 <StationSearch handleInputChange={this.handleInputChange} value={this.state.query} />
-                <DetailsTable stationDetails={this.state.filteredStationDetails} timeDates={this.state.timeDates} />
+                <DetailsTable stationDetails={this.state.filteredStationDetails} getSelectedStations={this.getSelection} stationsSelected={this.state.selectedStations} resetProcessor={this.processReset} />
             </div>
         );
     }

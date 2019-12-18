@@ -9,7 +9,6 @@ class DetailsTable extends Component{
     constructor(){
         super();
         this.state = {
-            stationDetailsWTime: [],
             selectedRows:[],
             startingStation: "",
             endingStation: "",
@@ -17,63 +16,11 @@ class DetailsTable extends Component{
         };
         this.handleRowSelection = this.handleRowSelection.bind(this);
         this.processSelectedRows = this.processSelectedRows.bind(this);
+        this.resetSelection = this.resetSelection.bind(this);
     }
 
-    updateStationDetails(timeArr, detailsArr, timeDatesObjs){
-        let newDetailsArr = [];
-        for(var i=0; i<detailsArr.length; i++){
-            let newDetailsArrObj = new Object();
-            let timeStr = undefined;
-            if(timeArr[i].hours === undefined){
-                timeStr = '---';
-            }else{
-                timeStr = `${timeArr[i].hours} : ${timeArr[i].minutes}`;
-            }
-            newDetailsArrObj.id = i;
-            newDetailsArrObj.stationName = detailsArr[i].stationName;
-            newDetailsArrObj.arrivalTime = detailsArr[i].arrivalTime;
-            newDetailsArrObj.arrivalTimeDateObj = timeDatesObjs[i].arrivalTime;
-            newDetailsArrObj.departureTime = detailsArr[i].departureTime;
-            newDetailsArrObj.departureTimeDateObj = timeDatesObjs[i].departureTime;
-            newDetailsArrObj.stayTimeSec = timeArr[i].seconds;
-            newDetailsArrObj.stayTimeHM = timeStr;
-            newDetailsArrObj.trackNum = detailsArr[i].trackNum;
-            newDetailsArr.push(newDetailsArrObj);
-        }
-        this.setState({ stationDetailsWTime: newDetailsArr })
-    }
-
-    calculateIntervals(timeDates, stationDetails){
-        console.log("data processing started in DetailsTable component");
-        let timeDiffsArr = [];
-        for (var i=0; i<timeDates.length; i++){
-            if(timeDates[i].arrivalTime === '---' || timeDates[i].departureTime === '---'){
-                timeDiffsArr.push('---');
-            }else{
-                let milliSecDiff = undefined;
-                let secDiff = undefined;
-                let minDiff = 0;
-                let hourDiff = 0;
-                let timeDiffsArrObj = new Object();
-                
-                milliSecDiff = timeDates[i].departureTime.getTime()-timeDates[i].arrivalTime.getTime();
-                secDiff = milliSecDiff/1000;
-                timeDiffsArrObj.seconds = secDiff;
-                if(secDiff>60){
-                    minDiff = Math.floor(secDiff/60);
-                }
-                if(minDiff>60){
-                    hourDiff = Math.floor(minDiff/60);
-                }
-                timeDiffsArrObj.hours = hourDiff;
-                timeDiffsArrObj.minutes = minDiff;
-                timeDiffsArr.push(timeDiffsArrObj);
-            }
-        }
-        this.updateStationDetails(timeDiffsArr, stationDetails, timeDates);
-    }
-
-    handleRowSelection(obj){    
+    handleRowSelection(obj){
+        this.props.getSelectedStations(obj);    
         let selectedRowsArr = this.state.selectedRows;
         selectedRowsArr.push(obj);
         this.setState({selectedRows: selectedRowsArr});
@@ -81,39 +28,63 @@ class DetailsTable extends Component{
 
     processSelectedRows(){
         let rowsArr = this.state.selectedRows.slice();
-        let trueRowsArr = [];
         let idArr = [];
-        let firstAndLastId = [];
-        let firstAndLastIdObjs = [];
-        let firstAndLastObjs = [];
+        let idArrUnique = [];
+        let idArrElementNum = [];
+        let idArrOddElements = [];
+        let idArrOddFirstTwo = [];
+        let rowsOddArrOfTwo = [];
+        let refinedRowObjs = [];
         let timeDiff = 0;
         let hours = 0;
         let minutes = 0;
         let remainingMins = 0;
         let timeStr = "";
-        for (var i=0; i<rowsArr.length; i++){
-            if(rowsArr[i].status === true){
-                trueRowsArr.push(rowsArr[i]);
-            }
-        }
-        for(var i=0; i<trueRowsArr.length; i++){
+        
+        for(var i=0; i<rowsArr.length; i++){
             idArr.push(rowsArr[i].id);
         }
         idArr.sort(function(a, b){
             return a - b;
         });
-        firstAndLastId.push(idArr[0]);
-        firstAndLastId.push(idArr[trueRowsArr.length-1]);
-        for(var i=0; i<firstAndLastId.length; i++){
-            for(var j=0; j<trueRowsArr.length; j++){
-                if(firstAndLastId[i] === trueRowsArr[j].id){
-                    firstAndLastIdObjs.push(trueRowsArr[j]);
+        for (var i=0; i<idArr.length; i++){
+            if(idArr[i] !== idArr[i+1]){
+                idArrUnique.push(idArr[i]);
+            }
+        }
+        for(var i=0; i<idArrUnique.length; i++){
+            let count = 0;
+            for(var j=0; j<idArr.length; j++){
+                if(idArrUnique[i] === idArr[j]){
+                    count++;
+                }
+            }
+            idArrElementNum.push(count);
+        }
+        for (var i=0; i<idArrElementNum.length; i++){
+            if(idArrElementNum[i]%2 !== 0){
+                idArrOddElements.push(idArrUnique[i]);
+            }
+        }
+        if (idArrOddElements.length>2){
+            alert(`You have selected ${idArrOddElements.length} stations. Max 2 stations can be selected. Please click Reset Selection to continue`);
+        }
+        if (idArrOddElements.length === 2){
+            idArrOddFirstTwo.push(idArrOddElements[0]);
+            idArrOddFirstTwo.push(idArrOddElements[1]);
+
+        }
+        for(var i=0; i<idArrOddFirstTwo.length; i++){
+            for(var j=0; j<rowsArr.length; j++){
+                if(idArrOddFirstTwo[i] === rowsArr[j].id && rowsArr[j].status){
+                    rowsOddArrOfTwo.push(rowsArr[j]);
                 }
             }
         }
-        firstAndLastObjs.push(firstAndLastIdObjs[0]);
-        firstAndLastObjs.push(firstAndLastIdObjs[firstAndLastIdObjs.length-1]);
-        timeDiff = (firstAndLastObjs[1].timeStamp.getTime() - firstAndLastIdObjs[0].timeStamp.getTime())/1000;
+
+        refinedRowObjs.push(rowsOddArrOfTwo[0]);
+        refinedRowObjs.push(rowsOddArrOfTwo[rowsOddArrOfTwo.length-1]);
+        timeDiff = (refinedRowObjs[1].timeStamp.getTime() - refinedRowObjs[0].timeStamp.getTime())/1000;
         if(timeDiff>60){
             minutes = Math.floor(timeDiff/60);
         }
@@ -126,20 +97,29 @@ class DetailsTable extends Component{
         }else{
             timeStr = `${hours} hours and ${remainingMins} minutes`;
         }
-        console.log(firstAndLastObjs);
-        this.setState({ startingStation: firstAndLastObjs[0].stationName });
-        this.setState({ endingStation: firstAndLastObjs[1].stationName });
-        this.setState({ travelTime: timeStr });
+        this.setState({ startingStation: refinedRowObjs[0].stationName });
+        this.setState({ endingStation: refinedRowObjs[1].stationName });
+        this.setState({ travelTime: timeStr });     
     }
 
-    componentDidUpdate(prevProps){
-        if(this.props.stationDetails.length !== prevProps.stationDetails.length){
-            this.calculateIntervals(this.props.timeDates, this.props.stationDetails);
-        }
+    resetSelection(){
+        this.props.resetProcessor();
+        this.setState({ startingStation: "" });
+        this.setState({ endingStation: "" });
+        this.setState({ travelTime: "" });
+        this.setState({ selectedRows: [] });
     }
 
     render(){
-        const detailRows = this.state.stationDetailsWTime.map(row => <DetailsRow detail={row} orderNum={row.id} selectionHandler={this.handleRowSelection} />);
+        for (var i=0; i<this.props.stationDetails.length; i++){
+            for(var j=0; j<this.props.stationsSelected.length; j++){
+                if(this.props.stationDetails[i].id === this.props.stationsSelected[j].id){
+                    this.props.stationDetails[i].checked = true;
+                }
+            }
+            this.props.stationDetails[i].currentLength = this.props.stationDetails.length;
+        }
+        let detailRows = this.props.stationDetails.map(row => <DetailsRow detail={row} orderNum={row.id} selectionHandler={this.handleRowSelection} />);
         return(
             <div> 
                 <table className='table-style'>
@@ -155,10 +135,11 @@ class DetailsTable extends Component{
                     <tbody> {detailRows} </tbody>
                 </table>
                 <p></p>
-                <Button className='displayButton' onClick={this.processSelectedRows} buttonText="Display travel time"/>
-                <p className='displayTravelTime'>First station in selection list: {this.state.startingStation}</p>
-                <p className='displayTravelTime'>Last station in selection list: {this.state.endingStation}</p>
-                <p className='displayTravelTime'>Travel time between stations: {this.state.travelTime}</p>
+                <Button onClick={this.processSelectedRows} buttonText="Display travel time"/>
+                <Button onClick={this.resetSelection} buttonText="Reset Selection"/>
+                <p>First station in selection list: {this.state.startingStation}</p>
+                <p>Last station in selection list: {this.state.endingStation}</p>
+                <p>Travel time between stations: {this.state.travelTime}</p>
            </div> 
 
         );
