@@ -3,8 +3,8 @@ import Button from '../Button/Button';
 import SearchData from './SearchData';
 
 class SaveSearch extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             //searchData: {}
         };

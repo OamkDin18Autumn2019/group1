@@ -7,6 +7,7 @@ import TrainDetails from './TrainDetails/TrainDetails'
 import MapContainer from './Map/Map'
 import SaveSearch from './SaveSearch/SaveSearch'
 
+
 class TrainSearch extends Component {
     constructor(props) {
         super(props)
@@ -73,6 +74,9 @@ class TrainSearch extends Component {
                 <h2 className='titleDetails'>Train Details</h2><br/>
                 <TrainDetails 
                     trainNum={this.state.buttonVal} 
+                />
+                <SaveSearch
+                    userInfo={this.props.userInfo}
                 />
             </div>
         )

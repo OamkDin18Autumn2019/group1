@@ -8,6 +8,7 @@ class MainView extends Component {
         super(props)
         this.state = {
             data: this.props.data,
+            fullUser: this.props.userInfo
         }
     }
 
@@ -15,7 +16,8 @@ class MainView extends Component {
         return (
             <div>
                 <TrainSearch 
-                    data={this.state.data} 
+                    data={this.state.data}
+                    userInfo={this.state.fullUser}
                 />
             </div>
         )

@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 // import approuter
 import AppRouter from './AppRouter/AppRouter'
 import Nav from './Nav/Nav'
-import SaveSearch from './TrainSearch/SaveSearch/SaveSearch'
 
 class Main extends Component {
     constructor() {
@@ -47,9 +46,8 @@ class Main extends Component {
                 <Nav userFullName={this.state.userFullName} setUserFullName={this.setUserFullName} fullUserVal={this.state.fullUser} setFullUserVal={this.setFullUser} />
                 <h1 className='title'>Train Tracker</h1>
                 <AppRouter 
-                    data={this.state.data} setUserFullName={this.setUserFullName} setFullUser={this.setFullUser} 
+                    data={this.state.data} setUserFullName={this.setUserFullName} setFullUser={this.setFullUser} userInfo={this.state.fullUser}
                 />
-                <SaveSearch userInfo={this.state.fullUser}/>
             </div>
             
         )
