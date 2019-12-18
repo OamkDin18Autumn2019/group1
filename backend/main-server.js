@@ -111,7 +111,7 @@ app.get('/api/users/login',
   passport.authenticate('basic', { session: false }),
   (req, res) => {
     // Send back user full name
-    res.json( { full_name: req.user.full_name } );
+    res.json( { full_name: req.user } );
 });
 
 
