@@ -21,7 +21,7 @@ class LoginView extends Component {
       // If login is succesfull, result contains user full name which is saved through setUserFullName function
       // then redirect back to app root
       this.props.setFullUser(result);
-      this.props.setUserFullName(result.full_name);
+      this.props.setUserFullName(result);
       this.setState({ toRoot: true });
     }).catch((error) => {
       console.log(error);
