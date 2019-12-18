@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 // import details row
 import DetailsRow from '../DetailsRow/DetailsRow'
 import Button from '../../Button/Button'
+import SearchData from '../../SaveSearch/SearchData';
 
 //
 class DetailsTable extends Component{
@@ -140,6 +141,7 @@ class DetailsTable extends Component{
                 <p className='displayTravelTime'>First station in selection list: {this.state.startingStation}</p>
                 <p className='displayTravelTime'>Last station in selection list: {this.state.endingStation}</p>
                 <p className='displayTravelTime'>Travel time between stations: {this.state.travelTime}</p>
+                <SearchData firstStation={this.state.startingStation} lastStation={this.state.endingStation} travelTime={this.state.travelTime} />
            </div> 
 
         );

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 // import approuter
 import AppRouter from './AppRouter/AppRouter'
 import Nav from './Nav/Nav'
+import SaveSearch from './TrainSearch/SaveSearch/SaveSearch'
 
 class Main extends Component {
     constructor() {
@@ -10,8 +11,11 @@ class Main extends Component {
         this.state = {
             data: [],
             isLoading: true,
-            userFullName: null
+            userFullName: null,
+            fullUser: null,
         }
+        this.setUserFullName = this.setUserFullName.bind(this);
+        this.setFullUser = this.setFullUser.bind(this);
     }
 
     // fetch all live trains
@@ -29,6 +33,10 @@ class Main extends Component {
         this.setState({ userFullName: newValue });
     }
 
+    setFullUser(val){
+        this.setState({ fullUser: val });
+    }
+
     render() {
         if (this.state.isLoading) {
             return "Loading..."
@@ -36,11 +44,12 @@ class Main extends Component {
 
         return (
             <div>
-                <Nav userFullName={this.state.userFullName} setUserFullName={this.setUserFullName} />
+                <Nav userFullName={this.state.userFullName} setUserFullName={this.setUserFullName} fullUserVal={this.state.fullUser} setFullUserVal={this.setFullUser} />
                 <h1 className='title'>Train Tracker</h1>
                 <AppRouter 
-                    data={this.state.data} setUserFullName={this.setUserFullName}
+                    data={this.state.data} setUserFullName={this.setUserFullName} setFullUser={this.setFullUser} 
                 />
+                <SaveSearch userInfo={this.state.fullUser}/>
             </div>
             
         )

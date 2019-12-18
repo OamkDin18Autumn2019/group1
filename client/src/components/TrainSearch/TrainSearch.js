@@ -74,8 +74,6 @@ class TrainSearch extends Component {
                 <TrainDetails 
                     trainNum={this.state.buttonVal} 
                 />
-                <h2>Save results in database (requires login)</h2>
-                <SaveSearch />
             </div>
         )
     }

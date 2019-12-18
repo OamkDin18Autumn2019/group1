@@ -17,9 +17,11 @@ class LoginView extends Component {
   userLogin = (event) => {
     event.preventDefault();
     Auth.authenticate(event.target['username'].value, event.target['password'].value).then(result => {
+      //console.log(result);
       // If login is succesfull, result contains user full name which is saved through setUserFullName function
       // then redirect back to app root
-      this.props.setUserFullName(result);
+      this.props.setFullUser(result);
+      this.props.setUserFullName(result.full_name);
       this.setState({ toRoot: true });
     }).catch((error) => {
       console.log(error);

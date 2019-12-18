@@ -3,12 +3,13 @@ import React, { Component } from 'react'
 // import navlink
 import NavLink from './NavLink/NavLink'
 import { Link } from "react-router-dom";
+import SaveSearch from '../TrainSearch/SaveSearch/SaveSearch.js';
 
 class Nav extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            routes: ["Home", "Login", "Register", "History"]
+            routes: ["Home", "Login", "Register", "History"],
         }
     }
 
@@ -25,6 +26,7 @@ class Nav extends Component {
     logout = (event) => {
         event.preventDefault();
         this.props.setUserFullName(null);
+        this.props.setFullUserVal(null);
     }
 
     render() {
