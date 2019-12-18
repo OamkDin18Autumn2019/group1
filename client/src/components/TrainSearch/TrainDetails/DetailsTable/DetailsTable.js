@@ -120,7 +120,7 @@ class DetailsTable extends Component{
             }
             this.props.stationDetails[i].currentLength = this.props.stationDetails.length;
         }
-        let detailRows = this.props.stationDetails.map(row => <DetailsRow detail={row} orderNum={row.id} selectionHandler={this.handleRowSelection} />);
+        let detailRows = this.props.stationDetails.map((row, index) => <DetailsRow key={index} detail={row} orderNum={row.id} selectionHandler={this.handleRowSelection} />);
         return(
             <div> 
                 <table className='table-style'>
