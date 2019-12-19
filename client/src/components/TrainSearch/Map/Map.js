@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
+import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react'
+
+// get google api key
+let API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
 
 class MapContainer extends Component {
     constructor(props) {
@@ -8,8 +11,8 @@ class MapContainer extends Component {
             locationData: [],
             data: this.props.data,
             isLoading: true,
-            showingInfoWindow: false,
             trainNumber: this.props.trainNumber,
+            showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {}
         }
@@ -22,6 +25,23 @@ class MapContainer extends Component {
             .then(locationData => {
                 this.setState({ locationData: locationData, isLoading: false })
         })
+    }
+
+    onMarkerClick = (props, marker, e) => {
+        this.setState({
+            selectedPlace: props,
+            activeMarker: marker,
+            showingInfoWindow: true
+        })
+    }
+
+    onMapClick = props => {
+        if (this.state.showingInfoWindow) {
+            this.setState({
+                showingInfoWindow: false,
+                activeMarker: null
+            })
+        }
     }
 
     render() {
@@ -37,14 +57,31 @@ class MapContainer extends Component {
             <Map className='Map'
                 google={this.props.google}
                 zoom={6}
-                initialCenter={{ lat: 64.00, lng: 26.50 }}
+                initialCenter={{ 
+                    lat: 64.00, 
+                    lng: 26.50 
+                }}
+                onClick={this.onMapClick}
             >
-                <Marker position={{ lat: this.state.locationData[0].location.coordinates[1], lng: this.state.locationData[0].location.coordinates[0] }} />
+                <Marker 
+                    position={{ 
+                        lat: this.state.locationData[0].location.coordinates[1], 
+                        lng: this.state.locationData[0].location.coordinates[0] 
+                    }}
+                    onClick={this.onMarkerClick}
+                />
+                <InfoWindow
+                    marker={this.state.activeMarker}
+                    visible={this.state.showingInfoWindow}>
+                    <div>
+                        <h1>Train {this.state.trainNumber}</h1>
+                    </div>
+                </InfoWindow>
             </ Map>
         )
     }
 }
 
 export default GoogleApiWrapper({
-    apiKey: ''
+    apiKey: API_KEY
 })(MapContainer)
