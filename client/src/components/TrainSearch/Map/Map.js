@@ -54,7 +54,7 @@ class MapContainer extends Component {
         }
 
         return (
-            <Map
+            <Map className='Map'
                 google={this.props.google}
                 zoom={6}
                 initialCenter={{ 
