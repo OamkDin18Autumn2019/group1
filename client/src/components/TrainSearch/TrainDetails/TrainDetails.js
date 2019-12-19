@@ -295,7 +295,7 @@ class TrainDetails extends Component{
         return(
             <div>
                 <StationSearch handleInputChange={this.handleInputChange} value={this.state.query} />
-                <DetailsTable stationDetails={this.state.filteredStationDetails} getSelectedStations={this.getSelection} stationsSelected={this.state.selectedStations} resetProcessor={this.processReset} />
+                <DetailsTable stationDetails={this.state.filteredStationDetails} getSelectedStations={this.getSelection} stationsSelected={this.state.selectedStations} resetProcessor={this.processReset} userInfo={this.props.userInfo} />
             </div>
         );
     }

@@ -19,7 +19,7 @@ class AppRouter extends Component {
     render() {
         return (
             <div>
-                <Route exact path='/' render={props => <MainView {...props} data={this.state.data} />} />
+                <Route exact path='/' render={props => <MainView {...props} data={this.state.data} userInfo={this.props.userInfo} />} />
                 <Route exact path="/register" render={ props => <RegisterView  {...props} /> }/>
                 <Route exact path="/login"    render={ props => <LoginView     {...props} setUserFullName={this.props.setUserFullName} setFullUser={this.props.setFullUser} /> }/>
                 <Route exact path="/history"  render={ props => <History  {...props} /> }/>

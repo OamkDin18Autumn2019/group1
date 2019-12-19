@@ -15,7 +15,7 @@ class MainView extends Component {
         return (
             <div>
                 <TrainSearch 
-                    data={this.state.data} 
+                    data={this.state.data} userInfo={this.props.userInfo}
                 />
             </div>
         )

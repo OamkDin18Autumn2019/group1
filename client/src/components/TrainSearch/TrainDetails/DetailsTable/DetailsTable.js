@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 // import details row
 import DetailsRow from '../DetailsRow/DetailsRow'
 import Button from '../../Button/Button'
-import SearchData from '../../SaveSearch/SearchData';
 
 //
 class DetailsTable extends Component{
@@ -18,6 +17,14 @@ class DetailsTable extends Component{
         this.handleRowSelection = this.handleRowSelection.bind(this);
         this.processSelectedRows = this.processSelectedRows.bind(this);
         this.resetSelection = this.resetSelection.bind(this);
+        this.saveSearch = this.saveSearch.bind(this);
+    }
+
+    saveSearch(){
+        console.log(this.state.startingStation);
+        console.log(this.state.endingStation);
+        console.log(this.state.travelTime);
+        console.log(this.props.userInfo);
     }
 
     handleRowSelection(obj){
@@ -112,6 +119,7 @@ class DetailsTable extends Component{
     }
 
     render(){
+        //console.log(this.props.userInfo);
         for (var i=0; i<this.props.stationDetails.length; i++){
             for(var j=0; j<this.props.stationsSelected.length; j++){
                 if(this.props.stationDetails[i].id === this.props.stationsSelected[j].id){
@@ -141,7 +149,9 @@ class DetailsTable extends Component{
                 <p className='displayTravelTime'>First station in selection list: {this.state.startingStation}</p>
                 <p className='displayTravelTime'>Last station in selection list: {this.state.endingStation}</p>
                 <p className='displayTravelTime'>Travel time between stations: {this.state.travelTime}</p>
-                <SearchData firstStation={this.state.startingStation} lastStation={this.state.endingStation} travelTime={this.state.travelTime} />
+                <p></p>
+                <Button className='displayButton' onClick={this.saveSearch} buttonText="*Save Search"/>
+                <p>*Requires Login</p>
            </div> 
 
         );

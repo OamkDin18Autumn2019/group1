@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 // import navlink
 import NavLink from './NavLink/NavLink'
 import { Link } from "react-router-dom";
-import SaveSearch from '../TrainSearch/SaveSearch/SaveSearch.js';
 
 class Nav extends Component {
     constructor(props) {
