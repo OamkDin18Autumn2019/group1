@@ -159,20 +159,20 @@ code {
 
 /*Style buttons*/
 .mainFunctionButton {
-    color: #b16116 !important;
+    color: purple !important;
     margin: 5px;
     text-transform: uppercase;
     background: #ffffff;
     padding: 12px;
-    border: 4px solid #b16116 !important;
+    border: 4px solid purple !important;
     border-radius: 6px;
     display: inline-block;
     transition: all 0.3s ease 0s;
 }
 .mainFunctionButton:hover {
-    color: red !important;
+    color: greenyellow !important;
     border-radius: 50px;
-    border-color: red !important;
+    border-color: greenyellow !important;
     transition: all 0.3s ease 0s;
 }
 
@@ -359,13 +359,13 @@ tr:hover {background-color:#7c7c7c;}
 /*Style Dropdown*/
 .Dropdown {
     background-color: rgb(255, 255, 255);
-    color: #b16116;
+    color: purple;
     padding: 9px;
     font-size: 15px;
     border: none;
     cursor: pointer;
     border-radius: 10px;
-    border: 2px solid #b16116;
+    border: 2px solid purple;
 }
 .Dropdown-content {
     position: absolute;
@@ -373,7 +373,7 @@ tr:hover {background-color:#7c7c7c;}
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    color: #b16116;
+    color: purple;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
