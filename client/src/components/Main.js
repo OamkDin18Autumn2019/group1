@@ -42,7 +42,6 @@ class Main extends Component {
                     data={this.state.data} setUserFullName={this.setUserFullName}
                 />
             </div>
-            
         )
     }
 }
