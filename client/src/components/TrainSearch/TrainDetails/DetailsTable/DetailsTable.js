@@ -21,10 +21,26 @@ class DetailsTable extends Component{
     }
 
     saveSearch(){
-        console.log(this.state.startingStation);
-        console.log(this.state.endingStation);
-        console.log(this.state.travelTime);
-        console.log(this.props.userInfo);
+        if(this.props.userInfo === null){
+            alert("Please login to save data.");
+            return;
+        }else{
+            let allUserData = {
+                firstStation: this.state.startingStation,
+                lastStation: this.state.endingStation,
+                travelTime: this.state.travelTime,
+                username: this.props.userInfo.username
+            };
+            fetch('http://localhost:4000/api/save_user_data', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body:JSON.stringify(allUserData),
+            })
+            .then(response => response.json())
+            .then(data => {
+               alert(`${data.msg} You can check your data from History page.`); 
+            });
+        }
     }
 
     handleRowSelection(obj){

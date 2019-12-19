@@ -41,6 +41,22 @@ app.post('/api/resolve_station', (req, res) => {
     });
 });
 
+app.post('/api/save_user_data', (req, res) => {
+  const data = req.body;
+  db.collection('user_data').insertOne(data);
+  res.json({msg: "Data successfully saved."});
+});
+
+app.post('/api/get_user_data', (req, res) => {
+  const data = req.body;
+  db.collection('user_data').find({username: data.username}).toArray()
+  .then(arr => {
+      res.json(arr);
+  });
+});
+
+
+
 
 // Register a new user
 // Needs following arguments: full_name, username, password
